@@ -26,7 +26,8 @@
     .reveal a { color: #67e8cf; }
     .reveal em { color: #ffd18b; font-style: normal; }
     .reveal code:not(pre code) { color: #ffd18b; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
-    .reveal pre { width: 100%; margin: .4em 0; box-shadow: none; font-size: .69em; }
+    .reveal pre { width: 100%; margin: .4em 0; box-shadow: none; font-size: .76em; }
+    .reveal pre table { font-size: inherit; margin: 0; }
     .reveal pre.code-wrapper { position: relative; }
     .reveal pre code { max-height: none; padding: .8em 1em; border: 1px solid #42516a; border-radius: .35em; line-height: 1.35; }
     .reveal .controls { color: #67e8cf; }
@@ -58,6 +59,16 @@
     .reveal .hljs-ln-code { padding-left: .5em; }
     .reveal .hljs-ln-numbers { color: #9bb0c5; }
     .reveal .slide-background { background: radial-gradient(circle at 88% 14%, #1c394a 0, #101827 43%); }
+    .reveal blockquote { margin: .5em 0; padding: .55em .7em; border-left: 5px solid #67e8cf; background: #183c43; font-size: 1.15em; line-height: 1.3; }
+    .reveal .reference { margin-top: .8em; font-size: .53em; line-height: 1.4; color: #aebdd0; }
+    .python-intro { display: grid; grid-template-columns: 1fr 240px; gap: 1em; align-items: center; }
+    .python-intro img { width: 240px; height: auto; box-sizing: border-box; padding: 18px; background: #fff; border-radius: 12px; }
+    .terminal { margin: .5em 0; border: 1px solid #4b6670; border-radius: 8px; overflow: hidden; background: #0b131d; }
+    .terminal-label { padding: .35em .8em; background: #22313c; color: #c9d8e2; font-size: .5em; font-weight: 650; letter-spacing: .04em; }
+    .reveal .terminal pre { margin: 0; padding: .55em .8em; box-sizing: border-box; color: #c1f4da; font-size: .7em; line-height: 1.3; white-space: pre-wrap; }
+    .terminal samp { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .terminal .typed { color: #ffd18b; }
+    .decision-diagram { display: block; width: 100%; height: 300px; margin: .55em 0; }
     @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -65,203 +76,378 @@
   <div class="reveal">
     <div class="slides">
       <section>
-        <p class="eyebrow">Engenharia Elétrica · Introdução à programação</p>
+        <p class="eyebrow">Introdução à programação</p>
         <h1>Python para entender<br><span class="accent">o consumo de energia</span></h1>
         <div class="divider"></div>
-        <p class="lead">Da primeira variável a uma estimativa de custo.</p>
-        <p class="small muted">45 min de conceitos · 15 min de notebook</p>
+        <p class="small muted">Waldsson Sacramento dos Santos</p>
       </section>
 
       <section>
-        <p class="eyebrow">O problema da aula</p>
-        <h2>Quanto custa usar um aparelho?</h2>
-        <div class="cards">
-          <div class="card"><h3>O que sabemos</h3><p>Potência, horas por dia, dias de uso e tarifa.</p></div>
-          <div class="card"><h3>O que queremos</h3><p>Energia consumida, custo e comparação com um orçamento.</p></div>
+        <p class="eyebrow">Começando do início</p>
+        <h2>O que significa programar?</h2>
+        <blockquote>“A arte de programar é a arte de organizar a complexidade.”</blockquote>
+        <p class="reference">Edsger W. Dijkstra, <a href="https://www.cs.utexas.edu/~EWD/transcriptions/EWD02xx/EWD249/EWD249.html">Notes on Structured Programming</a>, EWD 249, 1969, p. 7. Trecho, tradução livre.</p>
+        <p>Programar envolve organizar a solução de um problema em passos claros e expressá-los como instruções que o computador possa executar.</p>
+        <p>Antes de escrever o código, precisamos entender os dados disponíveis, o resultado desejado e a sequência que liga um ao outro.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Nossa linguagem</p>
+        <h2>Conhecendo o Python</h2>
+        <div class="python-intro">
+          <div>
+            <p>Python é uma <strong>linguagem de programação de propósito geral</strong>: podemos usá-la para cálculos, análise de dados e automação de tarefas.</p>
+            <p>Sua escrita prioriza a legibilidade. Um programa chamado <strong>interpretador</strong> executa as instruções que escrevemos nessa linguagem.</p>
+          </div>
+          <img src="assets/python-logo.svg" width="240" height="100" alt="Logotipo oficial do Python: símbolo azul e amarelo e nome Python">
         </div>
-        <p class="question">Se uma lâmpada fica ligada mais tempo, o que acontece com o custo?</p>
+        <p class="reference">Referência: <a href="https://www.python.org/doc/essays/blurb/">Python Software Foundation · O que é Python?</a> · <a href="https://www.python.org/community/logos/">Logotipo oficial</a></p>
       </section>
 
       <section>
-        <p class="eyebrow">Mapa da aula</p>
-        <h2>Um programa é uma sequência de passos</h2>
-        <div class="flow"><span>receber dados</span><b>→</b><span>calcular</span><b>→</b><span>comparar</span><b>→</b><span>mostrar</span></div>
-        <p>Vamos aprender cada passo com um exemplo elétrico e, ao final, executar o programa completo no notebook.</p>
-      </section>
-
-      <section>
-        <p class="eyebrow">01 · Saída</p>
-        <h2>O computador mostra o que pedimos</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2">print("Olá, Engenharia Elétrica!")
-print(12 + 3)</code></pre>
-        <p class="question">A segunda linha mostra <code>12 + 3</code> ou <code>15</code>?</p>
-        <p class="fragment answer">Mostra <strong>15</strong>: a conta é feita antes de <code>print()</code>.</p>
-      </section>
-
-      <section>
-        <p class="eyebrow">02 · Variáveis</p>
-        <h2>Damos nome aos valores</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">tensao = 220
-corrente = 0.75
-aparelho = "lâmpada"</code></pre>
-        <p><code>=</code> guarda o valor à direita sob o nome à esquerda.</p>
-        <p class="small muted">Nomes claros deixam a conta mais fácil de ler.</p>
-      </section>
-
-      <section>
-        <p class="eyebrow">02 · Tipos de dados</p>
-        <h2>O valor determina o tipo</h2>
+        <p class="eyebrow">Nosso ambiente de prática</p>
+        <h2>O que é um Jupyter Notebook?</h2>
+        <p>Um notebook é um <strong>documento interativo</strong> que reúne explicações, código e resultados. O Jupyter Notebook é uma aplicação que permite trabalhar com esses documentos no navegador.</p>
         <div class="cards">
-          <div class="card"><h3><code>int</code></h3><p>Inteiro: <code>220</code></p></div>
-          <div class="card"><h3><code>float</code></h3><p>Decimal: <code>0.75</code></p></div>
-          <div class="card"><h3><code>str</code></h3><p>Texto: <code>"lâmpada"</code></p></div>
-          <div class="card"><h3><code>bool</code></h3><p>Verdadeiro ou falso: <code>True</code></p></div>
+          <div class="card"><h3>Células de texto</h3><p>Apresentam orientações, fórmulas e anotações.</p></div>
+          <div class="card"><h3>Células de código</h3><p>Executam instruções e mostram os resultados logo abaixo.</p></div>
         </div>
-        <p class="small muted">Em Python, decimais usam ponto.</p>
+        <p class="small">Na aula, o arquivo <code>.ipynb</code> usará Python. Executaremos as células em ordem com <strong>Shift + Enter</strong>.</p>
+        <p class="reference">Referência: <a href="https://jupyter.org/">Project Jupyter · Notebook Document Format</a></p>
       </section>
 
       <section>
-        <p class="eyebrow">Pare e preveja</p>
-        <h2>Se mudarmos a tensão...</h2>
+        <p class="eyebrow">01 · Conceito de saída</p>
+        <h2>Como conhecemos o resultado?</h2>
+        <p>A <strong>saída</strong> é a informação que o programa apresenta a quem o utiliza. Pode ser uma mensagem, uma medida ou o resultado de uma conta.</p>
+        <p>Em Python, usamos a função <code>print()</code> para mostrar informações na tela. Uma função é uma operação pronta que chamamos pelo nome; entre parênteses, informamos o que ela deve receber.</p>
+        <p class="small muted">As aspas delimitam um texto. Esse tipo de valor também é chamado de <em>string</em>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Saída em Python</p>
+        <h2>Mostrando nossas primeiras mensagens</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">print(&quot;Olá, Engenharia Elétrica!&quot;)
+print(&quot;Vamos aprender Python.&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Olá, Engenharia Elétrica!
+Vamos aprender Python.</samp></pre></div>
+        <p>Cada chamada mostra o texto entre aspas em uma nova linha. As aspas delimitam o texto no código e não aparecem na saída.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Conceito de variável</p>
+        <h2>O que é uma variável?</h2>
+        <p>Uma <strong>variável permite guardar uma informação e recuperá-la pelo nome</strong> dentro de um programa. O valor associado a esse nome pode mudar durante a execução.</p>
+        <p>Por exemplo, podemos guardar a tensão de um aparelho na variável <code>tensao</code>. Quando precisamos dessa medida, usamos o nome para acessar seu valor.</p>
+        <div class="flow"><span>variável: <code>tensao</code></span><b>→</b><span>valor atual: 220</span></div>
+        <p class="small">A operação que associa um valor à variável se chama <strong>atribuição</strong>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Atribuição em Python</p>
+        <h2>Guardando um valor em uma variável</h2>
         <pre><code class="language-python" data-trim data-line-numbers="1|2">tensao = 220
-tensao = 127</code></pre>
-        <p class="question">Qual valor está guardado em <code>tensao</code> após a segunda linha? E qual é seu tipo?</p>
-        <p class="fragment answer"><strong>127</strong>, ainda do tipo <code>int</code>.</p>
+print(tensao)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>220</samp></pre></div>
+        <p>O símbolo <code>=</code> atribui o valor à direita à variável à esquerda.* Depois, <code>print(tensao)</code> consulta esse valor para mostrá-lo.</p>
+        <p class="reference">* Aqui, <code>=</code> indica atribuição. O teste de igualdade será apresentado com as comparações.</p>
       </section>
 
       <section>
-        <p class="eyebrow">03 · Cálculo</p>
-        <h2>Do circuito para o código</h2>
+        <p class="eyebrow">02 · Conceito de tipo</p>
+        <h2>Que espécie de informação é essa?</h2>
+        <p>O <strong>tipo</strong> descreve a natureza de um valor e as operações possíveis com ele. Python reconhece o tipo a partir do valor atribuído.</p>
+        <div class="cards">
+          <div class="card"><h3>Inteiro · <code>int</code></h3><p>Usado para contagens, como 30 dias.</p></div>
+          <div class="card"><h3>Decimal · <code>float</code></h3><p>Usado para medidas, como 0,75 A.</p></div>
+          <div class="card"><h3>Texto · <code>str</code></h3><p>Representa palavras, como o nome de um aparelho.</p></div>
+          <div class="card"><h3>Lógico · <code>bool</code></h3><p>Representa uma resposta: verdadeiro ou falso.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Tipos em Python</p>
+        <h2>Como escrevemos cada tipo?</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3|4">dias = 30
+corrente = 0.75
+aparelho = "lâmpada"
+ligado = True</code></pre>
+        <p>O decimal usa <strong>ponto</strong>, o texto fica entre <strong>aspas</strong> e os valores lógicos são escritos como <code>True</code> ou <code>False</code>.</p>
+        <p class="small muted">No notebook, a função <code>type()</code> permite consultar o tipo de um valor.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Acompanhe a execução</p>
+        <h2>Uma nova atribuição atualiza o valor</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3-4">tensao = 220
+print(tensao)
+tensao = 127
+print(tensao)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>220
+127</samp></pre></div>
+        <p>O programa executa as linhas em ordem. A primeira chamada usa o valor inicial; a segunda usa o novo valor de <code>tensao</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Conceito de operação</p>
+        <h2>Transformamos dados em resultados</h2>
+        <p>Uma expressão combina valores e operações para produzir um resultado. Podemos usar números diretamente ou os nomes das variáveis que os representam.</p>
+        <p>Python escreve soma com <code>+</code>, subtração com <code>-</code>, multiplicação com <code>*</code> e divisão com <code>/</code>.</p>
         <p class="formula">Potência (W) = tensão (V) × corrente (A)</p>
-        <pre><code class="language-python" data-trim data-line-numbers="1-2|3">tensao = 127
+        <p class="small muted">Neste exemplo, consideramos uma carga resistiva. Multiplicaremos 127 V por 2 A.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Operações em Python</p>
+        <h2>Calculando a potência</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3|4">tensao = 127
 corrente = 2
-potencia = tensao * corrente</code></pre>
-        <p class="question">Quanto vale <code>potencia</code>?</p>
-        <p class="fragment answer"><strong>254 W</strong>.</p>
+potencia = tensao * corrente
+print(potencia)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>254</samp></pre></div>
+        <p>Python multiplica os valores e guarda o resultado em <code>potencia</code>. A unidade é W porque usamos tensão em V e corrente em A.</p>
       </section>
 
       <section>
-        <p class="eyebrow">03 · Saída legível</p>
-        <h2>Um número precisa de contexto</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2">print(potencia)
-print(f"Potência: {potencia:.2f} W")</code></pre>
-        <p>A <em>f-string</em> encaixa o valor na mensagem. <code>:.2f</code> mostra duas casas decimais.</p>
-        <p class="fragment answer">Saída: <strong>Potência: 254.00 W</strong></p>
+        <p class="eyebrow">03 · Conceito de f-string</p>
+        <h2>Como inserir valores em uma mensagem?</h2>
+        <p>Podemos apresentar um resultado junto de sua descrição e unidade. Uma <strong>f-string</strong> é um texto que permite inserir valores de variáveis nessa mensagem.</p>
+        <p>Escrevemos a letra <code>f</code> antes das aspas e colocamos o nome da variável entre chaves <code>{ }</code>. Na execução, o valor ocupa o lugar indicado pelas chaves.</p>
+        <div class="flow"><span>descrição</span><b>+</b><span>valor da variável</span><b>+</b><span>unidade</span></div>
       </section>
 
       <section>
-        <p class="eyebrow">04 · Entrada</p>
-        <h2>Agora o usuário informa o valor</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2">texto = input("Potência em W: ")
-print(type(texto))</code></pre>
-        <p class="question">Se a pessoa digitar <code>100.5</code>, o tipo será <code>float</code>?</p>
-        <p class="fragment answer">Não. <code>input()</code> sempre devolve <strong>texto</strong>.</p>
+        <p class="eyebrow">03 · F-string em Python</p>
+        <h2>O valor entra no lugar das chaves</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">potencia = 254
+print(f&quot;Potência: {potencia} W&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Potência: 254 W</samp></pre></div>
+        <p>O trecho <code>{potencia}</code> é substituído pelo valor da variável. O restante da mensagem aparece como foi escrito.</p>
       </section>
 
       <section>
-        <p class="eyebrow">04 · Conversão</p>
-        <h2>Para calcular, convertemos</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">texto = input("Potência em W: ")
+        <p class="eyebrow">03 · Formatação decimal</p>
+        <h2>Como escolher as casas decimais?</h2>
+        <p>Depois de inserir um valor em uma f-string, podemos escolher <strong>como ele será exibido</strong>. Medidas e valores monetários costumam ser apresentados com uma quantidade definida de casas decimais.</p>
+        <p>Dentro das chaves, <code>:.2f</code> pede duas casas decimais. Essa formatação afeta o texto mostrado, sem alterar o valor guardado na variável.</p>
+        <p>Nesse formato, Python usa <strong>ponto como separador decimal</strong>: o valor aparece como <code>254.00</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Casas decimais em Python</p>
+        <h2>Ajustando a apresentação do número</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">potencia = 254
+print(f&quot;Potência: {potencia:.2f} W&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Potência: 254.00 W</samp></pre></div>
+        <p>Agora, o valor inserido na mensagem aparece com duas casas depois do ponto. Usaremos o mesmo recurso para mostrar o custo em reais.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Conceito de entrada</p>
+        <h2>Os dados podem vir de quem usa</h2>
+        <p>A <strong>entrada</strong> é a informação que o programa recebe. Ao pedir a potência de um aparelho, podemos repetir o cálculo com outro valor sem editar o código.</p>
+        <p>A função <code>input()</code> mostra uma pergunta e espera a pessoa digitar e pressionar Enter. Sua resposta chega ao programa como <strong>texto</strong>, mesmo que contenha apenas algarismos.</p>
+        <div class="flow"><span>pergunta na tela</span><b>→</b><span>digitação</span><b>→</b><span>texto recebido</span></div>
+      </section>
+
+      <section data-input="100.5">
+        <p class="eyebrow">04 · Entrada em Python</p>
+        <h2>Perguntar, esperar e guardar</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">texto = input(&quot;Potência em W: &quot;)
+print(texto)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Potência em W: <span class="typed">100.5</span>
+100.5</samp></pre></div>
+        <p>A primeira linha espera a digitação e o Enter. A resposta fica guardada como <strong>texto</strong>, mesmo que tenha aparência de número.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Conceito de conversão</p>
+        <h2>Algarismos em um texto ainda são texto</h2>
+        <p>O texto <code>"100.5"</code> e o número <code>100.5</code> têm representações parecidas, mas tipos diferentes. Para dividir a potência por 1000, precisamos de um valor numérico.</p>
+        <p><strong>Converter</strong> é obter um valor de outro tipo. Usamos <code>float()</code> para interpretar um texto numérico com decimais e <code>int()</code> para um inteiro, como <code>"30"</code>.</p>
+        <p class="small muted">O texto precisa ter um formato válido: use ponto decimal. Entradas como “cem” causam erro de conversão.</p>
+      </section>
+
+      <section data-input="100">
+        <p class="eyebrow">04 · Conversão em Python</p>
+        <h2>Convertendo antes de calcular</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">texto = input(&quot;Potência em W: &quot;)
 potencia_w = float(texto)
 print(potencia_w / 1000)</code></pre>
-        <p><code>float()</code> aceita decimais; <code>int()</code> serve para inteiros, como o número de dias.</p>
-        <p class="small muted">Digite <code>100.5</code>, com ponto. Uma entrada que não seja número causa erro de conversão.</p>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Potência em W: <span class="typed">100</span>
+0.1</samp></pre></div>
+        <p><code>float()</code> converte o texto recebido em número. Assim, podemos dividir 100 W por 1000 e obter 0,1 kW.</p>
       </section>
 
       <section>
-        <p class="eyebrow">05 · Decisão</p>
-        <h2>O programa escolhe um caminho</h2>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2|3-4">if potencia_w &gt; 100:
-    print("Acima de 100 W")
+        <p class="eyebrow">05 · Conceito de comparação</p>
+        <h2>Verificando uma relação entre valores</h2>
+        <p><strong>Comparar</strong> é verificar se uma relação entre dois valores é verdadeira. Podemos testar se eles são iguais, diferentes ou se um é maior que o outro.</p>
+        <p>O resultado é sempre um valor <strong>booleano</strong>, do tipo <code>bool</code>: <code>True</code> quando a relação é verdadeira e <code>False</code> quando é falsa.</p>
+        <table class="operators">
+          <thead><tr><th>Operador</th><th>Relação testada</th><th>Operador</th><th>Relação testada</th></tr></thead>
+          <tbody><tr><td><code>==</code></td><td>Igual a</td><td><code>!=</code></td><td>Diferente de</td></tr>
+          <tr><td><code>&gt;</code></td><td>Maior que</td><td><code>&lt;</code></td><td>Menor que</td></tr>
+          <tr><td><code>&gt;=</code></td><td>Maior ou igual</td><td><code>&lt;=</code></td><td>Menor ou igual</td></tr></tbody>
+        </table>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Comparações em Python</p>
+        <h2>Uma comparação produz um booleano</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3">potencia_w = 100
+print(potencia_w &gt; 100)
+print(potencia_w &gt;= 100)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>False
+True</samp></pre></div>
+        <p>100 não é maior que 100, mas é maior <em>ou igual</em> a 100. As duas expressões produzem valores do tipo <code>bool</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Conceito de condição</p>
+        <h2>Uma regra determina o caminho</h2>
+        <p>Uma <strong>condição</strong> permite executar instruções conforme o resultado de uma pergunta. Se a potência ultrapassa o limite, mostramos um aviso; caso contrário, mostramos outra mensagem.</p>
+        <p>Em Python, <code>if</code> significa “se” e <code>else</code>, “caso contrário”. Os dois-pontos iniciam cada bloco; os espaços à esquerda, chamados de <strong>indentação</strong>, indicam as instruções que pertencem a ele.</p>
+        <p class="small muted">Usaremos quatro espaços por nível. Nesse par de alternativas, apenas um bloco será executado.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Visualizando a decisão</p>
+        <h2>Do resultado booleano a dois caminhos</h2>
+        <p>O resultado booleano determina <strong>qual caminho seguir</strong>.</p>
+        <svg class="decision-diagram" viewBox="0 0 920 320" role="img" aria-labelledby="decision-title decision-desc">
+          <title id="decision-title">Decisão sobre a potência de um aparelho</title>
+          <desc id="decision-desc">Se a potência é maior que 100 W, o caminho verdadeiro mostra Acima de 100 W. Caso contrário, o caminho falso mostra Até 100 W. Os dois caminhos se encontram e o programa continua.</desc>
+          <defs><marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#aebdd0"/></marker></defs>
+          <path d="M 460 10 L 625 80 L 460 150 L 295 80 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="460" y="74" text-anchor="middle" fill="#f4f7fb" font-size="24">Potência maior</text>
+          <text x="460" y="106" text-anchor="middle" fill="#f4f7fb" font-size="24">que 100 W?</text>
+          <g fill="none" stroke="#aebdd0" stroke-width="2" marker-end="url(#arrowhead)">
+            <path d="M295 80 H190 V180"/><path d="M625 80 H730 V180"/>
+            <path d="M190 242 V270 H460 V298"/><path d="M730 242 V270 H460"/>
+          </g>
+          <text x="180" y="53" text-anchor="middle" fill="#67e8cf" font-size="23">Sim · True</text>
+          <text x="740" y="53" text-anchor="middle" fill="#ffd18b" font-size="23">Não · False</text>
+          <rect x="30" y="182" width="320" height="60" rx="10" fill="#1b2a3f" stroke="#67e8cf"/>
+          <rect x="570" y="182" width="320" height="60" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="190" y="219" text-anchor="middle" fill="#f4f7fb" font-size="24">Mostrar “Acima de 100 W”</text>
+          <text x="730" y="219" text-anchor="middle" fill="#f4f7fb" font-size="24">Mostrar “Até 100 W”</text>
+          <text x="480" y="313" fill="#aebdd0" font-size="20">continuar</text>
+        </svg>
+        <p class="question">Com potência de 100 W, qual caminho será seguido?</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Condição em Python</p>
+        <h2>O diagrama se transforma em código</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3|4-5">potencia_w = 100
+if potencia_w &gt; 100:
+    print(&quot;Acima de 100 W&quot;)
 else:
-    print("Até 100 W")</code></pre>
-        <p class="small muted">Os espaços no início das linhas indicam o bloco executado em cada caso.</p>
+    print(&quot;Até 100 W&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Até 100 W</samp></pre></div>
+        <p>A comparação produz <code>False</code>, então o bloco de <code>else</code> é executado. Com 150 W, o resultado seria <code>True</code> e o programa seguiria o bloco de <code>if</code>.</p>
       </section>
 
       <section>
-        <p class="eyebrow">Teste de fronteira</p>
-        <h2>E quando a potência é 100 W?</h2>
-        <div class="cards">
-          <div class="card"><h3><code>100 &gt; 100</code></h3><p>Falso: executa <code>else</code>.</p></div>
-          <div class="card"><h3><code>100 &gt;= 100</code></h3><p>Verdadeiro: executa <code>if</code>.</p></div>
-        </div>
-        <p class="question">Uma única comparação muda a classificação do valor limite.</p>
+        <p class="eyebrow">Da explicação à aplicação</p>
+        <h2>Agora vamos resolver um problema real</h2>
+        <p class="lead">Vamos usar Python para estimar o consumo de energia de um aparelho e verificar se o custo cabe em um orçamento.</p>
+        <p>Reuniremos o que aprendemos: variáveis guardam os dados, operações calculam o resultado e uma condição escolhe a mensagem final.</p>
+        <div class="flow"><span>dados do aparelho</span><b>→</b><span>consumo e custo</span><b>→</b><span>avaliação do orçamento</span></div>
       </section>
 
       <section>
-        <p class="eyebrow">06 · Projeto: consumo</p>
-        <h2>Quais dados entram no estimador?</h2>
-        <div class="cards">
-          <div class="card"><h3>Uso</h3><p><strong>100 W</strong> · <strong>5 h/dia</strong> · <strong>30 dias</strong></p></div>
-          <div class="card"><h3>Dinheiro</h3><p><strong>R$ 0,80/kWh</strong> · orçamento de <strong>R$ 10,00</strong></p></div>
-        </div>
-        <p class="small muted">É uma estimativa: potência real, impostos e bandeiras tarifárias podem alterar a conta.</p>
+        <p class="eyebrow">06 · Nosso problema</p>
+        <h2>Quanto custa usar este aparelho?</h2>
+        <p>Um aparelho de <strong>100 W</strong> fica ligado <strong>5 horas por dia</strong>, durante <strong>30 dias</strong>. Considere a tarifa de <strong>R$ 0,80 por kWh</strong> e um orçamento de <strong>R$ 10,00</strong>.</p>
+        <p>Precisamos responder a três perguntas:</p>
+        <ol><li>Quanta energia foi consumida no período?</li><li>Qual é o custo estimado desse consumo?</li><li>O custo ultrapassa o orçamento disponível?</li></ol>
       </section>
 
       <section>
-        <p class="eyebrow">06 · Energia</p>
-        <h2>Primeiro, calculamos kWh</h2>
-        <p class="formula">energia = potência ÷ 1000 × horas/dia × dias</p>
-        <pre><code class="language-python" data-trim data-line-numbers="1-3|4">potencia_w = 100
+        <p class="eyebrow">06 · Entendendo o projeto</p>
+        <h2>Potência e energia medem coisas diferentes</h2>
+        <p>A <strong>potência</strong> indica a rapidez com que um aparelho consome energia. A <strong>energia consumida</strong> depende também de quanto tempo ele fica ligado.</p>
+        <p>Usaremos potência constante e calcularemos a energia multiplicando essa potência pelo tempo total de uso. Em kW e horas, o resultado será em <strong>kWh</strong>.</p>
+        <p class="small muted">A estimativa da aula desconsidera variações de potência, impostos e bandeiras tarifárias.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Preparando a conta</p>
+        <h2>Da rotina de uso à energia consumida</h2>
+        <p>Considere um aparelho de <strong>100 W</strong>, usado por <strong>5 horas por dia</strong>, durante <strong>30 dias</strong>. Primeiro, colocamos os dados nas unidades da fórmula.</p>
+        <ol>
+          <li>Dividir 100 W por 1000 dá <strong>0,1 kW</strong>.</li>
+          <li>Multiplicar 5 horas por 30 dias dá <strong>150 horas</strong> de uso.</li>
+          <li>Multiplicar 0,1 kW por 150 h dá <strong>15 kWh</strong>.</li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Energia em Python</p>
+        <h2>Calculando o consumo do período</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-3|4|5">potencia_w = 100
 horas_dia = 5
 dias = 30
-energia_kwh = potencia_w / 1000 * horas_dia * dias</code></pre>
-        <p class="fragment metric">15 kWh</p>
-        <p class="small muted">Dividir por 1000 transforma W em kW; horas × dias transforma o uso diário em horas totais.</p>
+energia_kwh = potencia_w / 1000 * horas_dia * dias
+print(f&quot;Consumo: {energia_kwh:.2f} kWh&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Consumo: 15.00 kWh</samp></pre></div>
+        <p>A expressão reúne a potência em kW e as horas totais de uso. Guardamos o resultado em <code>energia_kwh</code> para a próxima etapa.</p>
       </section>
 
       <section>
-        <p class="eyebrow">06 · Custo</p>
-        <h2>Depois, aplicamos a tarifa</h2>
-        <p class="formula">custo = energia (kWh) × tarifa (R$/kWh)</p>
-        <pre><code class="language-python" data-trim data-line-numbers="1|2">tarifa = 0.80
-custo = energia_kwh * tarifa</code></pre>
-        <p class="fragment metric">R$ 12,00</p>
+        <p class="eyebrow">06 · Entendendo custo e orçamento</p>
+        <h2>Quanto pagamos por essa energia?</h2>
+        <p>A <strong>tarifa</strong> informa o preço de cada kWh. Se cada unidade custa R$ 0,80, o consumo de 15 kWh terá custo estimado de <strong>15 × 0,80 = R$ 12,00</strong>.</p>
+        <p>O <strong>orçamento</strong> é o valor que podemos gastar. A regra será avisar quando o custo for maior que ele; um custo igual ao orçamento ainda estará dentro do limite.</p>
+        <p class="question">Um custo de R$ 12,00 ultrapassa um orçamento de R$ 10,00?</p>
       </section>
 
       <section>
-        <p class="eyebrow">06 · Orçamento</p>
-        <h2>R$ 12,00 cabe em R$ 10,00?</h2>
+        <p class="eyebrow">06 · Custo em Python</p>
+        <h2>Reutilizando a energia calculada</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">tarifa = 0.80
+custo = energia_kwh * tarifa
+print(f&quot;Custo estimado: R$ {custo:.2f}&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Custo estimado: R$ 12.00</samp></pre></div>
+        <p>Multiplicamos os 15 kWh pelo preço de cada kWh. O resultado da conta é o custo estimado em reais.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Orçamento em Python</p>
+        <h2>Verificando se o custo cabe no orçamento</h2>
         <pre><code class="language-python" data-trim data-line-numbers="1|2-3|4-5">orcamento = 10.00
 if custo &gt; orcamento:
-    print("Custo acima do orçamento")
+    print(&quot;Custo acima do orçamento&quot;)
 else:
-    print("Custo dentro do orçamento")</code></pre>
-        <p class="fragment answer">Acima do orçamento. Se ambos forem R$ 12,00, executa <code>else</code>.</p>
+    print(&quot;Custo dentro do orçamento&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Custo acima do orçamento</samp></pre></div>
+        <p>Como 12 é maior que 10, o programa executa o bloco de <code>if</code>. Com orçamento de R$ 12,00, a comparação seria falsa e o bloco de <code>else</code> seria executado.</p>
       </section>
 
       <section>
-        <p class="eyebrow">Juntando as peças</p>
-        <h2>Você já conhece o programa inteiro</h2>
-        <div class="flow"><span><code>input()</code></span><b>→</b><span><code>float()</code> / <code>int()</code></span><b>→</b><span>kWh e R$</span><b>→</b><span><code>if</code></span><b>→</b><span><code>print()</code></span></div>
-        <p class="question">Qual dessas etapas falha se tentarmos fazer contas diretamente com o texto recebido por <code>input()</code>?</p>
-        <p class="fragment answer">O cálculo. Precisamos converter o texto antes.</p>
-      </section>
-
-      <section>
-        <p class="eyebrow">Revisão rápida</p>
-        <h2>Antes de abrir o notebook</h2>
+        <p class="eyebrow">Revisão · Explique com suas palavras</p>
+        <h2>Como cada conceito ajuda o programa?</h2>
         <ol>
-          <li>Por que dividimos a potência por 1000?</li>
-          <li>Qual função transforma o texto digitado em decimal?</li>
-          <li>Com custo igual ao orçamento, qual ramo executa?</li>
+          <li>Para que demos nomes aos valores usados na conta?</li>
+          <li>Por que convertemos a resposta recebida do usuário?</li>
+          <li>Como o programa escolhe a mensagem sobre o orçamento?</li>
         </ol>
-        <p class="fragment answer small">W → kW · <code>float()</code> · <code>else</code></p>
+        <p class="fragment answer">Variáveis permitem reutilizar valores; a conversão permite calcular com números; a condição escolhe qual bloco executar.</p>
       </section>
 
       <section>
-        <p class="eyebrow">15 minutos · Demonstração no notebook</p>
-        <h2>Agora vamos executar</h2>
-        <table>
-          <thead><tr><th>Tempo</th><th>Trecho do notebook</th><th>Observar</th></tr></thead>
-          <tbody>
-            <tr><td>0–3 min</td><td>Saída e variáveis</td><td><code>print()</code>, valores e tipos</td></tr>
-            <tr><td>3–5 min</td><td>Exercício de potência</td><td><code>127 × 2 = 254 W</code></td></tr>
-            <tr><td>5–8 min</td><td>Entrada e decisão</td><td>Texto, conversão e limite de 100 W</td></tr>
-            <tr><td>8–15 min</td><td>Programa completo</td><td>15 kWh, R$ 12,00; depois orçamento de R$ 15,00</td></tr>
-          </tbody>
-        </table>
-        <p class="small"><a href="aula_python_engenharia_eletrica.ipynb" download>Baixar o notebook</a> · Demais exercícios: estudo posterior.</p>
+        <p class="eyebrow">Prática no Jupyter Notebook</p>
+        <h2>Vamos executar, alterar e observar</h2>
+        <p>Abra o notebook da aula e execute as células na ordem. Use <strong>Shift + Enter</strong> para executar uma célula e avançar para a próxima.</p>
+        <ol>
+          <li>Acompanhe os exemplos de saída, variáveis, operações e decisões.</li>
+          <li>Execute o estimador com os dados do problema: 100 W, 5 h/dia, 30 dias, tarifa 0,80 e orçamento 10.</li>
+          <li>Altere o orçamento para 15 e observe a mudança na mensagem.</li>
+        </ol>
+        <p class="small muted">As variáveis permanecem disponíveis durante a sessão. A ordem de execução das células influencia os resultados.</p>
+        <p class="small"><a href="aula_python_engenharia_eletrica.ipynb" download>Baixar o notebook da aula</a></p>
       </section>
     </div>
   </div>
