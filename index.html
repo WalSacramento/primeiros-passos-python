@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aula introdutória de Python aplicada à Engenharia Elétrica">
+  <title>Python para Engenharia Elétrica — primeiros passos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight/monokai.css">
+  <style>
+    :root { color-scheme: dark; }
+    body { background: #101827; }
+    .reveal {
+      color: #f4f7fb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 31px;
+    }
+    .reveal .slides section { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 { color: #fff; font-family: inherit; font-weight: 760; letter-spacing: -.035em; text-transform: none; }
+    .reveal h1 { font-size: 2.3em; line-height: 1.04; }
+    .reveal h2 { font-size: 1.55em; line-height: 1.12; margin-bottom: .65em; }
+    .reveal h3 { font-size: .95em; margin: 0 0 .35em; }
+    .reveal p, .reveal li { line-height: 1.35; }
+    .reveal p { margin: .35em 0; }
+    .reveal strong, .accent { color: #67e8cf; }
+    .reveal a { color: #67e8cf; }
+    .reveal em { color: #ffd18b; font-style: normal; }
+    .reveal code:not(pre code) { color: #ffd18b; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+    .reveal pre { width: 100%; margin: .4em 0; box-shadow: none; font-size: .69em; }
+    .reveal pre.code-wrapper { position: relative; }
+    .reveal pre code { max-height: none; padding: .8em 1em; border: 1px solid #42516a; border-radius: .35em; line-height: 1.35; }
+    .reveal .controls { color: #67e8cf; }
+    .reveal .progress { color: #67e8cf; height: 4px; }
+    .reveal .slide-number { left: 18px; right: auto; color: #cbd5e1; background: transparent; font-size: 17px; }
+    .eyebrow { margin-bottom: .65em !important; color: #67e8cf; font-size: .53em; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .lead { color: #dbe5f1; font-size: 1.22em; line-height: 1.3 !important; }
+    .muted { color: #aebdd0; }
+    .small { font-size: .68em; }
+    .tiny { font-size: .55em; }
+    .question { margin-top: .75em !important; padding: .48em .65em; border-left: 5px solid #ffd18b; background: #1b2a3f; color: #fff; }
+    .answer { margin-top: .55em !important; color: #67e8cf; }
+    .pill { display: inline-block; margin: .2em .25em .2em 0; padding: .24em .48em; border: 1px solid #56718a; border-radius: 99px; color: #dce8f3; font-size: .65em; }
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55em; margin-top: .7em; }
+    .card { padding: .6em .7em; border: 1px solid #40526a; border-radius: .42em; background: #1b2a3f; }
+    .card p { font-size: .82em; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: .28em; margin: .9em 0; }
+    .flow span { padding: .42em .55em; border-radius: .3em; background: #1c3047; color: #e9f2fb; }
+    .flow b { color: #67e8cf; }
+    .formula { margin: .65em 0 !important; padding: .45em .65em; border-radius: .3em; background: #183c43; color: #f4fffc; font-size: 1.12em; }
+    .metric { margin: .55em 0; color: #67e8cf; font-size: 1.8em; font-weight: 760; letter-spacing: -.03em; }
+    .divider { width: 4.3em; height: .15em; margin: .6em 0 .85em; background: #67e8cf; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: .35em 0; }
+    .reveal table { width: 100%; margin: .5em 0; font-size: .75em; border-collapse: collapse; }
+    .reveal th, .reveal td { padding: .3em .45em; border-bottom: 1px solid #4a5b71; }
+    .reveal th { color: #67e8cf; }
+    .reveal .hljs { background: #172033; }
+    .reveal .hljs-ln-code { padding-left: .5em; }
+    .reveal .hljs-ln-numbers { color: #9bb0c5; }
+    .reveal .slide-background { background: radial-gradient(circle at 88% 14%, #1c394a 0, #101827 43%); }
+    @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <p class="eyebrow">Engenharia Elétrica · Introdução à programação</p>
+        <h1>Python para entender<br><span class="accent">o consumo de energia</span></h1>
+        <div class="divider"></div>
+        <p class="lead">Da primeira variável a uma estimativa de custo.</p>
+        <p class="small muted">45 min de conceitos · 15 min de notebook</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">O problema da aula</p>
+        <h2>Quanto custa usar um aparelho?</h2>
+        <div class="cards">
+          <div class="card"><h3>O que sabemos</h3><p>Potência, horas por dia, dias de uso e tarifa.</p></div>
+          <div class="card"><h3>O que queremos</h3><p>Energia consumida, custo e comparação com um orçamento.</p></div>
+        </div>
+        <p class="question">Se uma lâmpada fica ligada mais tempo, o que acontece com o custo?</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Mapa da aula</p>
+        <h2>Um programa é uma sequência de passos</h2>
+        <div class="flow"><span>receber dados</span><b>→</b><span>calcular</span><b>→</b><span>comparar</span><b>→</b><span>mostrar</span></div>
+        <p>Vamos aprender cada passo com um exemplo elétrico e, ao final, executar o programa completo no notebook.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Saída</p>
+        <h2>O computador mostra o que pedimos</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">print("Olá, Engenharia Elétrica!")
+print(12 + 3)</code></pre>
+        <p class="question">A segunda linha mostra <code>12 + 3</code> ou <code>15</code>?</p>
+        <p class="fragment answer">Mostra <strong>15</strong>: a conta é feita antes de <code>print()</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Variáveis</p>
+        <h2>Damos nome aos valores</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">tensao = 220
+corrente = 0.75
+aparelho = "lâmpada"</code></pre>
+        <p><code>=</code> guarda o valor à direita sob o nome à esquerda.</p>
+        <p class="small muted">Nomes claros deixam a conta mais fácil de ler.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Tipos de dados</p>
+        <h2>O valor determina o tipo</h2>
+        <div class="cards">
+          <div class="card"><h3><code>int</code></h3><p>Inteiro: <code>220</code></p></div>
+          <div class="card"><h3><code>float</code></h3><p>Decimal: <code>0.75</code></p></div>
+          <div class="card"><h3><code>str</code></h3><p>Texto: <code>"lâmpada"</code></p></div>
+          <div class="card"><h3><code>bool</code></h3><p>Verdadeiro ou falso: <code>True</code></p></div>
+        </div>
+        <p class="small muted">Em Python, decimais usam ponto.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Pare e preveja</p>
+        <h2>Se mudarmos a tensão...</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">tensao = 220
+tensao = 127</code></pre>
+        <p class="question">Qual valor está guardado em <code>tensao</code> após a segunda linha? E qual é seu tipo?</p>
+        <p class="fragment answer"><strong>127</strong>, ainda do tipo <code>int</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Cálculo</p>
+        <h2>Do circuito para o código</h2>
+        <p class="formula">Potência (W) = tensão (V) × corrente (A)</p>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3">tensao = 127
+corrente = 2
+potencia = tensao * corrente</code></pre>
+        <p class="question">Quanto vale <code>potencia</code>?</p>
+        <p class="fragment answer"><strong>254 W</strong>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Saída legível</p>
+        <h2>Um número precisa de contexto</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">print(potencia)
+print(f"Potência: {potencia:.2f} W")</code></pre>
+        <p>A <em>f-string</em> encaixa o valor na mensagem. <code>:.2f</code> mostra duas casas decimais.</p>
+        <p class="fragment answer">Saída: <strong>Potência: 254.00 W</strong></p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Entrada</p>
+        <h2>Agora o usuário informa o valor</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">texto = input("Potência em W: ")
+print(type(texto))</code></pre>
+        <p class="question">Se a pessoa digitar <code>100.5</code>, o tipo será <code>float</code>?</p>
+        <p class="fragment answer">Não. <code>input()</code> sempre devolve <strong>texto</strong>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Conversão</p>
+        <h2>Para calcular, convertemos</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">texto = input("Potência em W: ")
+potencia_w = float(texto)
+print(potencia_w / 1000)</code></pre>
+        <p><code>float()</code> aceita decimais; <code>int()</code> serve para inteiros, como o número de dias.</p>
+        <p class="small muted">Digite <code>100.5</code>, com ponto. Uma entrada que não seja número causa erro de conversão.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Decisão</p>
+        <h2>O programa escolhe um caminho</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3-4">if potencia_w &gt; 100:
+    print("Acima de 100 W")
+else:
+    print("Até 100 W")</code></pre>
+        <p class="small muted">Os espaços no início das linhas indicam o bloco executado em cada caso.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Teste de fronteira</p>
+        <h2>E quando a potência é 100 W?</h2>
+        <div class="cards">
+          <div class="card"><h3><code>100 &gt; 100</code></h3><p>Falso: executa <code>else</code>.</p></div>
+          <div class="card"><h3><code>100 &gt;= 100</code></h3><p>Verdadeiro: executa <code>if</code>.</p></div>
+        </div>
+        <p class="question">Uma única comparação muda a classificação do valor limite.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Projeto: consumo</p>
+        <h2>Quais dados entram no estimador?</h2>
+        <div class="cards">
+          <div class="card"><h3>Uso</h3><p><strong>100 W</strong> · <strong>5 h/dia</strong> · <strong>30 dias</strong></p></div>
+          <div class="card"><h3>Dinheiro</h3><p><strong>R$ 0,80/kWh</strong> · orçamento de <strong>R$ 10,00</strong></p></div>
+        </div>
+        <p class="small muted">É uma estimativa: potência real, impostos e bandeiras tarifárias podem alterar a conta.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Energia</p>
+        <h2>Primeiro, calculamos kWh</h2>
+        <p class="formula">energia = potência ÷ 1000 × horas/dia × dias</p>
+        <pre><code class="language-python" data-trim data-line-numbers="1-3|4">potencia_w = 100
+horas_dia = 5
+dias = 30
+energia_kwh = potencia_w / 1000 * horas_dia * dias</code></pre>
+        <p class="fragment metric">15 kWh</p>
+        <p class="small muted">Dividir por 1000 transforma W em kW; horas × dias transforma o uso diário em horas totais.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Custo</p>
+        <h2>Depois, aplicamos a tarifa</h2>
+        <p class="formula">custo = energia (kWh) × tarifa (R$/kWh)</p>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">tarifa = 0.80
+custo = energia_kwh * tarifa</code></pre>
+        <p class="fragment metric">R$ 12,00</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Orçamento</p>
+        <h2>R$ 12,00 cabe em R$ 10,00?</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2-3|4-5">orcamento = 10.00
+if custo &gt; orcamento:
+    print("Custo acima do orçamento")
+else:
+    print("Custo dentro do orçamento")</code></pre>
+        <p class="fragment answer">Acima do orçamento. Se ambos forem R$ 12,00, executa <code>else</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Juntando as peças</p>
+        <h2>Você já conhece o programa inteiro</h2>
+        <div class="flow"><span><code>input()</code></span><b>→</b><span><code>float()</code> / <code>int()</code></span><b>→</b><span>kWh e R$</span><b>→</b><span><code>if</code></span><b>→</b><span><code>print()</code></span></div>
+        <p class="question">Qual dessas etapas falha se tentarmos fazer contas diretamente com o texto recebido por <code>input()</code>?</p>
+        <p class="fragment answer">O cálculo. Precisamos converter o texto antes.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão rápida</p>
+        <h2>Antes de abrir o notebook</h2>
+        <ol>
+          <li>Por que dividimos a potência por 1000?</li>
+          <li>Qual função transforma o texto digitado em decimal?</li>
+          <li>Com custo igual ao orçamento, qual ramo executa?</li>
+        </ol>
+        <p class="fragment answer small">W → kW · <code>float()</code> · <code>else</code></p>
+      </section>
+
+      <section>
+        <p class="eyebrow">15 minutos · Demonstração no notebook</p>
+        <h2>Agora vamos executar</h2>
+        <table>
+          <thead><tr><th>Tempo</th><th>Trecho do notebook</th><th>Observar</th></tr></thead>
+          <tbody>
+            <tr><td>0–3 min</td><td>Saída e variáveis</td><td><code>print()</code>, valores e tipos</td></tr>
+            <tr><td>3–5 min</td><td>Exercício de potência</td><td><code>127 × 2 = 254 W</code></td></tr>
+            <tr><td>5–8 min</td><td>Entrada e decisão</td><td>Texto, conversão e limite de 100 W</td></tr>
+            <tr><td>8–15 min</td><td>Programa completo</td><td>15 kWh, R$ 12,00; depois orçamento de R$ 15,00</td></tr>
+          </tbody>
+        </table>
+        <p class="small"><a href="aula_python_engenharia_eletrica.ipynb" download>Baixar o notebook</a> · Demais exercícios: estudo posterior.</p>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', progress: true, transition: 'fade', plugins: [RevealHighlight] });
+  </script>
+</body>
+</html>
