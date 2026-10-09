@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aula de Python com jogos: sorteios, repetição e decisões">
+  <title>Aprendendo Python com jogos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight/monokai.css">
+  <style>
+    :root { color-scheme: dark; }
+    body { background: #101827; }
+    .reveal {
+      color: #f4f7fb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 31px;
+    }
+    .reveal .slides section { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 { color: #fff; font-family: inherit; font-weight: 760; letter-spacing: -.035em; text-transform: none; }
+    .reveal h1 { font-size: 2.3em; line-height: 1.04; }
+    .reveal h2 { font-size: 1.55em; line-height: 1.12; margin-bottom: .65em; }
+    .reveal h3 { font-size: .95em; margin: 0 0 .35em; }
+    .reveal p, .reveal li { line-height: 1.35; }
+    .reveal p { margin: .35em 0; }
+    .reveal strong, .accent { color: #67e8cf; }
+    .reveal a { color: #67e8cf; }
+    .reveal em { color: #ffd18b; font-style: normal; }
+    .reveal code:not(pre code) { color: #ffd18b; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+    .reveal pre { width: 100%; margin: .4em 0; box-shadow: none; font-size: .76em; }
+    .reveal pre table { font-size: inherit; margin: 0; }
+    .reveal pre.long { font-size: .6em; }
+    .reveal .think li { margin: .5em 0; }
+    .reveal .think .answer { margin-top: .15em !important; font-size: .85em; }
+    .reveal pre.code-wrapper { position: relative; }
+    .reveal pre code { max-height: none; padding: .8em 1em; border: 1px solid #42516a; border-radius: .35em; line-height: 1.35; }
+    .reveal .controls { color: #67e8cf; }
+    .reveal .progress { color: #67e8cf; height: 4px; }
+    .reveal .slide-number { left: 18px; right: auto; color: #cbd5e1; background: transparent; font-size: 17px; }
+    .eyebrow { margin-bottom: .65em !important; color: #67e8cf; font-size: .53em; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .lead { color: #dbe5f1; font-size: 1.22em; line-height: 1.3 !important; }
+    .muted { color: #aebdd0; }
+    .small { font-size: .68em; }
+    .tiny { font-size: .55em; }
+    .question { margin-top: .75em !important; padding: .48em .65em; border-left: 5px solid #ffd18b; background: #1b2a3f; color: #fff; }
+    .answer { margin-top: .55em !important; color: #67e8cf; }
+    .pill { display: inline-block; margin: .2em .25em .2em 0; padding: .24em .48em; border: 1px solid #56718a; border-radius: 99px; color: #dce8f3; font-size: .65em; }
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55em; margin-top: .7em; }
+    .card { padding: .6em .7em; border: 1px solid #40526a; border-radius: .42em; background: #1b2a3f; }
+    .card p { font-size: .82em; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: .28em; margin: .9em 0; }
+    .flow span { padding: .42em .55em; border-radius: .3em; background: #1c3047; color: #e9f2fb; }
+    .flow b { color: #67e8cf; }
+    .formula { margin: .65em 0 !important; padding: .45em .65em; border-radius: .3em; background: #183c43; color: #f4fffc; font-size: 1.12em; }
+    .metric { margin: .55em 0; color: #67e8cf; font-size: 1.8em; font-weight: 760; letter-spacing: -.03em; }
+    .divider { width: 4.3em; height: .15em; margin: .6em 0 .85em; background: #67e8cf; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: .35em 0; }
+    .reveal table { width: 100%; margin: .5em 0; font-size: .75em; border-collapse: collapse; }
+    .reveal th, .reveal td { padding: .3em .45em; border-bottom: 1px solid #4a5b71; }
+    .reveal th { color: #67e8cf; }
+    .reveal .hljs { background: #172033; }
+    .reveal .hljs-ln-code { padding-left: .5em; }
+    .reveal .hljs-ln-numbers { color: #9bb0c5; }
+    .reveal .slide-background { background: radial-gradient(circle at 88% 14%, #1c394a 0, #101827 43%); }
+    .reveal blockquote { margin: .5em 0; padding: .55em .7em; border-left: 5px solid #67e8cf; background: #183c43; font-size: 1.15em; line-height: 1.3; }
+    .reveal .reference { margin-top: .8em; font-size: .53em; line-height: 1.4; color: #aebdd0; }
+    .python-intro { display: grid; grid-template-columns: 1fr 240px; gap: 1em; align-items: center; }
+    .python-intro img { width: 240px; height: auto; box-sizing: border-box; padding: 18px; background: #fff; border-radius: 12px; }
+    .terminal { margin: .5em 0; border: 1px solid #4b6670; border-radius: 8px; overflow: hidden; background: #0b131d; }
+    .terminal-label { padding: .35em .8em; background: #22313c; color: #c9d8e2; font-size: .5em; font-weight: 650; letter-spacing: .04em; }
+    .reveal .terminal pre { margin: 0; padding: .55em .8em; box-sizing: border-box; color: #c1f4da; font-size: .7em; line-height: 1.3; white-space: pre-wrap; }
+    .terminal samp { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .terminal .typed { color: #ffd18b; }
+    .decision-diagram { display: block; width: 100%; height: 300px; margin: .55em 0; }
+    @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <p class="eyebrow">Programação com jogos</p>
+        <h1>Aprendendo Python<br><span class="accent">com jogos</span></h1>
+        <div class="divider"></div>
+        <p class="small muted">Waldsson Sacramento dos Santos</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Nossa aula</p>
+        <h2>Seis jogos, um conceito por vez</h2>
+        <table>
+          <thead><tr><th>Tempo</th><th>Atividade</th><th>Aprendizado principal</th></tr></thead>
+          <tbody><tr><td>10 min</td><td>Revisão</td><td>Entrada, conversão, comparação e repetição</td></tr>
+          <tr><td>25 min</td><td>Jogo de adivinhação</td><td><code>for</code>, <code>range</code>, <code>break</code> e sorteio</td></tr>
+          <tr><td>10 min</td><td>Duelo de dados</td><td>Sortear, comparar e tratar empate</td></tr>
+          <tr><td>15 min</td><td>Par ou ímpar</td><td>Soma, resto da divisão e condições</td></tr>
+          <tr><td>20 min</td><td>Pedra, papel e tesoura</td><td><code>elif</code> e combinação de condições</td></tr>
+          <tr><td>15 min</td><td>Aventura de decisões</td><td>Textos e condições aninhadas</td></tr>
+          <tr><td>20 min</td><td>Quiz de multiplicação</td><td>Sorteio, repetição e pontuação</td></tr>
+          <tr><td>5 min</td><td>Revisão</td><td>Explicar e testar as soluções</td></tr></tbody>
+        </table>
+      </section>
+
+      <section>
+        <p class="eyebrow">Nosso método</p>
+        <h2>Primeiro a solução, depois o código</h2>
+        <p>Em cada jogo, vamos <strong>pensar antes de programar</strong>. Depois de ler as regras, você terá alguns minutos para responder a perguntas sobre a solução, em português e sem código.</p>
+        <p>Só depois vamos traduzir essas respostas para Python. O código é a última etapa: ele registra uma solução que já entendemos.</p>
+        <div class="flow"><span>entender as regras</span><b>→</b><span>pensar na solução</span><b>→</b><span>traduzir para Python</span><b>→</b><span>testar</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão · Entrada e conversão</p>
+        <h2>O programa pergunta e converte</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">idade = int(input(&quot;Sua idade: &quot;))
+print(idade + 1)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Sua idade: <span class="typed">17</span>
+18</samp></pre></div>
+        <p><code>input()</code> devolve texto. Com <code>int()</code>, a resposta vira um número inteiro e podemos fazer contas com ela.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão · Comparação e decisão</p>
+        <h2>A comparação escolhe o caminho</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3-4">idade = 17
+if idade &gt;= 18:
+    print(&quot;Pode votar e dirigir&quot;)
+else:
+    print(&quot;Ainda não pode dirigir&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Ainda não pode dirigir</samp></pre></div>
+        <p>A comparação <code>idade &gt;= 18</code> produz <code>False</code>, então apenas o bloco de <code>else</code> é executado.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão · Repetição</p>
+        <h2>E quando a mesma tarefa se repete?</h2>
+        <p>No jogo de adivinhação, a pessoa tem até <strong>dez palpites</strong>. Escrever dez vezes as mesmas linhas seria cansativo e daria margem a erros.</p>
+        <p><strong>Repetir</strong> é pedir ao computador que execute o mesmo bloco de instruções várias vezes. Hoje, vamos escrever essa repetição em Python.</p>
+        <div class="flow"><span>pedir palpite</span><b>→</b><span>comparar</span><b>→</b><span>dar uma dica</span><b>↺</b><span>de novo</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · O desafio</p>
+        <h2>Adivinhe o número secreto</h2>
+        <p>O computador sorteia <strong>uma vez</strong> um número inteiro de <strong>0 a 100</strong>, inclusive. A pessoa tem <strong>dez palpites</strong> para descobri-lo.</p>
+        <ol>
+          <li>A cada palpite, o programa diz se ele ficou <em>abaixo</em> ou <em>acima</em> do número.</li>
+          <li>Ao acertar, o jogo termina na hora.</li>
+          <li>Depois de dez erros, o programa revela o número.</li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Pense antes de programar</p>
+        <h2>Como você resolveria esse jogo?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>Que informações o programa precisa guardar?<p class="fragment answer">O número sorteado, o palpite atual e se a pessoa já acertou.</p></li>
+          <li>O que acontece uma vez só? E o que se repete?<p class="fragment answer">O sorteio acontece uma vez. Pedir o palpite e dar a dica se repete até dez vezes.</p></li>
+          <li>Quando o jogo termina?<p class="fragment answer">Ao acertar ou depois do décimo palpite.</p></li>
+          <li>Como o programa decide, no final, se revela o número?<p class="fragment answer">Ele precisa lembrar se houve acerto. Se não houve, mostra o número.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Conceito de sorteio</p>
+        <h2>Como o computador escolhe um número?</h2>
+        <p>Python traz <strong>módulos</strong>: coleções de funções prontas, organizadas por assunto. O módulo <code>random</code> reúne funções de sorteio.</p>
+        <p>Para usá-lo, escrevemos <code>import random</code> no início do programa. Depois, <code>random.randint(0, 100)</code> sorteia um inteiro entre 0 e 100, <strong>incluindo os dois limites</strong>.</p>
+        <div class="flow"><span><code>import random</code></span><b>→</b><span><code>random.randint(início, fim)</code></span><b>→</b><span>número sorteado</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Conceito de mais de dois caminhos</p>
+        <h2>Um palpite, três respostas</h2>
+        <p>Um palpite pode estar <strong>certo</strong>, <strong>abaixo</strong> ou <strong>acima</strong> do número. Com <code>if</code> e <code>else</code>, temos apenas dois caminhos.</p>
+        <p><code>elif</code> significa “senão, se”. Ele testa uma nova condição quando as anteriores foram falsas. O programa segue <strong>somente o primeiro caminho verdadeiro</strong>, e <code>else</code> cobre o que sobrou.</p>
+        <div class="flow"><span><code>if</code> certo</span><b>→</b><span><code>elif</code> abaixo</span><b>→</b><span><code>else</code> acima</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Conceito de repetição</p>
+        <h2>Repetindo um bloco com <code>for</code></h2>
+        <p>O comando <code>for</code> executa o bloco indentado uma vez para cada valor de uma sequência. A cada volta, a variável recebe o próximo valor.</p>
+        <p><code>range(1, 11)</code> produz os inteiros de 1 a 10. O <strong>início entra e o fim não entra</strong>, por isso escrevemos 11 para chegar a 10.</p>
+        <div class="flow"><span><code>for tentativa in range(1, 11):</code></span><b>→</b><span><code>tentativa</code> vale 1, 2, …, 10</span></div>
+        <p class="small muted">Assim como em <code>if</code>, os dois-pontos e a indentação marcam o bloco que será repetido.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Conceito de interrupção</p>
+        <h2>Parar antes da décima tentativa</h2>
+        <p>Se a pessoa acertar no terceiro palpite, não faz sentido pedir outro. O comando <code>break</code> <strong>interrompe a repetição</strong> imediatamente, e o programa continua depois do bloco do <code>for</code>.</p>
+        <p>Ao final, precisamos saber se o jogo terminou por acerto ou por falta de tentativas. Para isso, guardamos um booleano: <code>acertou = False</code> antes do laço e <code>acertou = True</code> no acerto.</p>
+        <p class="small muted"><code>not acertou</code> inverte o valor: é verdadeiro quando <code>acertou</code> é <code>False</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Visualizando o jogo</p>
+        <h2>O caminho de uma partida</h2>
+        <svg class="decision-diagram" viewBox="0 0 920 320" role="img" aria-labelledby="loop-title loop-desc">
+          <title id="loop-title">Fluxo do jogo de adivinhação</title>
+          <desc id="loop-desc">Depois de sortear o número, o programa verifica se ainda há tentativa. Se houver, lê um palpite e verifica se acertou. Se acertou, parabeniza e interrompe com break. Se não acertou, dá a dica de abaixo ou acima e volta a verificar as tentativas. Quando as tentativas acabam, revela o número.</desc>
+          <defs><marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#aebdd0"/></marker></defs>
+          <g fill="none" stroke="#aebdd0" stroke-width="2" marker-end="url(#loop-arrow)">
+            <path d="M180 160 H226"/><path d="M432 160 H478"/><path d="M630 160 H668"/>
+            <path d="M770 215 V248"/><path d="M770 105 V34 H712"/><path d="M480 34 H330 V93"/>
+            <path d="M330 225 V248"/>
+          </g>
+          <rect x="10" y="130" width="170" height="60" rx="10" fill="#1b2a3f" stroke="#aebdd0"/>
+          <text x="95" y="167" text-anchor="middle" fill="#f4f7fb" font-size="21">Sortear número</text>
+          <path d="M 330 95 L 432 160 L 330 225 L 228 160 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="330" y="154" text-anchor="middle" fill="#f4f7fb" font-size="20">Ainda há</text>
+          <text x="330" y="180" text-anchor="middle" fill="#f4f7fb" font-size="20">tentativa?</text>
+          <rect x="480" y="130" width="150" height="60" rx="10" fill="#1b2a3f" stroke="#aebdd0"/>
+          <text x="555" y="167" text-anchor="middle" fill="#f4f7fb" font-size="21">Ler palpite</text>
+          <path d="M 770 105 L 870 160 L 770 215 L 670 160 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="770" y="167" text-anchor="middle" fill="#f4f7fb" font-size="20">Acertou?</text>
+          <rect x="670" y="250" width="200" height="60" rx="10" fill="#1b2a3f" stroke="#67e8cf"/>
+          <text x="770" y="287" text-anchor="middle" fill="#f4f7fb" font-size="21">Parabéns · <tspan fill="#ffd18b">break</tspan></text>
+          <rect x="480" y="8" width="230" height="52" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="595" y="41" text-anchor="middle" fill="#f4f7fb" font-size="21">Dica: abaixo ou acima</text>
+          <rect x="230" y="250" width="200" height="60" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="330" y="287" text-anchor="middle" fill="#f4f7fb" font-size="21">Revelar o número</text>
+          <text x="455" y="148" text-anchor="middle" fill="#67e8cf" font-size="18">Sim</text>
+          <text x="795" y="238" text-anchor="middle" fill="#67e8cf" font-size="18">Sim</text>
+          <text x="797" y="85" text-anchor="middle" fill="#ffd18b" font-size="18">Não</text>
+          <text x="357" y="242" text-anchor="middle" fill="#ffd18b" font-size="18">Não</text>
+        </svg>
+        <p class="question">Em uma partida sem acertos, quantas vezes a dica aparece?</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Adivinhação em Python</p>
+        <h2>O programa completo</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1-3|4-5|6-9|10-13|14-15">import random
+numero = random.randint(0, 100)
+acertou = False
+for tentativa in range(1, 11):
+    palpite = int(input(f&quot;Tentativa {tentativa}/10 · seu palpite: &quot;))
+    if palpite == numero:
+        print(&quot;Acertou!&quot;)
+        acertou = True
+        break
+    elif palpite &lt; numero:
+        print(&quot;Seu palpite ficou abaixo do número.&quot;)
+    else:
+        print(&quot;Seu palpite ficou acima do número.&quot;)
+if not acertou:
+    print(f&quot;Fim das tentativas. O número era {numero}.&quot;)</code></pre>
+        <p class="small">O sorteio fica <strong>antes</strong> do <code>for</code> para acontecer uma vez só. A mensagem final fica <strong>depois</strong> do bloco.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Uma partida</p>
+        <h2>Acompanhe os palpites</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Tentativa 1/10 · seu palpite: <span class="typed">50</span>
+Seu palpite ficou acima do número.
+Tentativa 2/10 · seu palpite: <span class="typed">25</span>
+Seu palpite ficou abaixo do número.
+Tentativa 3/10 · seu palpite: <span class="typed">37</span>
+Acertou!</samp></pre></div>
+        <p class="small">No terceiro palpite, <code>break</code> encerra o <code>for</code>. Como <code>acertou</code> vale <code>True</code>, a mensagem final não aparece. O número sorteado pode variar.</p>
+        <p class="question">Por que começar com 50 é uma boa estratégia?</p>
+        <p class="fragment answer">Cada dica elimina cerca de metade dos números restantes. Assim, sete palpites bem escolhidos bastam para 101 números.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Duelo de dados</p>
+        <h2>Quem tira o maior número?</h2>
+        <p>O programa sorteia um dado de <strong>seis faces</strong> para a pessoa e outro para o computador. Depois, mostra os dois valores e anuncia o resultado.</p>
+        <p>Se o seu dado for <strong>maior</strong>, você vence. Se for <strong>menor</strong>, vence o computador.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Pense antes de programar</p>
+        <h2>Quais resultados precisamos prever?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>Quais valores o programa sorteia?<p class="fragment answer">Dois dados de 1 a 6: um para a pessoa e outro para o computador.</p></li>
+          <li>Quantos resultados uma partida pode ter?<p class="fragment answer">Três: vitória, derrota e empate.</p></li>
+          <li>Em que ordem você testaria esses resultados?<p class="fragment answer">Maior? Menor? Se não for nenhum dos dois, os dados são iguais: empate.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Duelo em Python</p>
+        <h2>Dois sorteios e três resultados</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-3|4|5-6|7-8|9-10">import random
+jogador = random.randint(1, 6)
+computador = random.randint(1, 6)
+print(f&quot;Seu dado: {jogador} · Computador: {computador}&quot;)
+if jogador &gt; computador:
+    print(&quot;Você venceu!&quot;)
+elif jogador &lt; computador:
+    print(&quot;O computador venceu.&quot;)
+else:
+    print(&quot;Empate!&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Seu dado: 4 · Computador: 4
+Empate!</samp></pre></div>
+        <p class="small muted">Os valores sorteados podem variar a cada execução.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Par ou ímpar</p>
+        <h2>A soma decide quem vence</h2>
+        <p>A pessoa escolhe <strong>par</strong> ou <strong>ímpar</strong> e informa um inteiro de <strong>0 a 10</strong>. O computador sorteia outro número nesse intervalo.</p>
+        <p>Somamos os dois números. Se a <strong>paridade da soma</strong> for a escolhida, a pessoa vence; caso contrário, vence o computador.</p>
+        <div class="flow"><span>escolha e número</span><b>→</b><span>sorteio</span><b>→</b><span>soma</span><b>→</b><span><code>soma % 2</code></span><b>→</b><span>vencedor</span></div>
+        <p class="small muted">Digite a escolha exatamente como <code>par</code> ou <code>ímpar</code>, em letras minúsculas.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Pense antes de programar</p>
+        <h2>Como decidir quem venceu?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>O que o programa precisa calcular antes de decidir?<p class="fragment answer">A soma do seu número com o do computador.</p></li>
+          <li>Como saber se um número é par sem consultar uma lista?<p class="fragment answer">Dividir por 2 e ver se sobra resto. Sem resto, é par; com resto 1, é ímpar.</p></li>
+          <li>Precisamos testar cada combinação de números?<p class="fragment answer">Não. Basta comparar a paridade da soma com a escolha da pessoa.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Conceito de resto</p>
+        <h2>Como saber se um número é par?</h2>
+        <p>Um número é <strong>par</strong> quando a divisão por 2 não deixa resto. Quando o resto é 1, o número é <strong>ímpar</strong>.</p>
+        <p>Em Python, o operador <code>%</code> calcula o <strong>resto da divisão</strong> inteira. Por exemplo, 7 dividido por 2 dá 3 e sobra 1, então <code>7 % 2</code> vale 1.</p>
+        <p class="formula">número % 2 == 0 → par &nbsp;·&nbsp; número % 2 == 1 → ímpar</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Par ou ímpar em Python</p>
+        <h2>Somando e descobrindo a paridade</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3|4|5-8|9">escolha = input(&quot;Par ou ímpar? &quot;)
+jogador = int(input(&quot;Seu número (0 a 10): &quot;))
+computador = random.randint(0, 10)
+soma = jogador + computador
+if soma % 2 == 0:
+    resultado = &quot;par&quot;
+else:
+    resultado = &quot;ímpar&quot;
+print(f&quot;Computador: {computador} · Soma: {soma} · Deu {resultado}&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Par ou ímpar? <span class="typed">par</span>
+Seu número (0 a 10): <span class="typed">3</span>
+Computador: 6 · Soma: 9 · Deu ímpar</samp></pre></div>
+        <p class="small muted">Considere <code>random</code> já importado. O número sorteado pode variar.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Par ou ímpar em Python</p>
+        <h2>Comparando dois textos</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3-4">if escolha == resultado:
+    print(&quot;Você venceu!&quot;)
+else:
+    print(&quot;O computador venceu.&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>O computador venceu.</samp></pre></div>
+        <p class="small"><code>==</code> também compara textos: <code>"par"</code> é diferente de <code>"ímpar"</code>, então o bloco de <code>else</code> é executado.</p>
+        <p class="question">Com ímpar e número 4, que sorteios vencem?</p>
+        <p class="fragment answer">1, 3, 5, 7 e 9: par mais ímpar dá ímpar.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Pedra, papel e tesoura</p>
+        <h2>Uma rodada contra o computador</h2>
+        <p>A pessoa digita <strong>1 = pedra</strong>, <strong>2 = papel</strong> ou <strong>3 = tesoura</strong>. O computador sorteia um número de 1 a 3.</p>
+        <table>
+          <thead><tr><th>Você \ Computador</th><th>Pedra</th><th>Papel</th><th>Tesoura</th></tr></thead>
+          <tbody><tr><td>Pedra</td><td>Empate</td><td>Derrota</td><td><strong>Vitória</strong></td></tr>
+          <tr><td>Papel</td><td><strong>Vitória</strong></td><td>Empate</td><td>Derrota</td></tr>
+          <tr><td>Tesoura</td><td>Derrota</td><td><strong>Vitória</strong></td><td>Empate</td></tr></tbody>
+        </table>
+        <p class="small">Há nove combinações: três empates, três vitórias e três derrotas.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Pense antes de programar</p>
+        <h2>Como reconhecer cada resultado?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>Quantas combinações de escolhas existem?<p class="fragment answer">Nove: três escolhas suas vezes três do computador.</p></li>
+          <li>Como reconhecer um empate com uma única pergunta?<p class="fragment answer">As duas escolhas são iguais.</p></li>
+          <li>Quais combinações dão vitória?<p class="fragment answer">Pedra contra tesoura, papel contra pedra e tesoura contra papel.</p></li>
+          <li>Precisamos descrever as derrotas uma a uma?<p class="fragment answer">Não. O que não é empate nem vitória só pode ser derrota.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Conceito de combinação</p>
+        <h2>Duas condições ao mesmo tempo</h2>
+        <p>Cada vitória depende de <strong>duas informações</strong>: a escolha da pessoa e a do computador. Por exemplo, a pessoa vence quando escolhe pedra <strong>e</strong> o computador escolhe tesoura.</p>
+        <p>Em Python, <code>and</code> combina duas comparações. O resultado é <code>True</code> somente quando <strong>as duas</strong> são verdadeiras.</p>
+        <div class="flow"><span><code>jogador == 1</code></span><b>and</b><span><code>computador == 3</code></span><b>→</b><span>pedra vence tesoura</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Pedra, papel e tesoura em Python</p>
+        <h2>Uma condição para cada vitória</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1-3|4|5-6|7-12|13-14">print(&quot;1 = pedra · 2 = papel · 3 = tesoura&quot;)
+jogador = int(input(&quot;Sua escolha: &quot;))
+computador = random.randint(1, 3)
+print(f&quot;Você: {jogador} · Computador: {computador}&quot;)
+if jogador == computador:
+    print(&quot;Empate!&quot;)
+elif jogador == 1 and computador == 3:
+    print(&quot;Pedra quebra tesoura. Você venceu!&quot;)
+elif jogador == 2 and computador == 1:
+    print(&quot;Papel embrulha pedra. Você venceu!&quot;)
+elif jogador == 3 and computador == 2:
+    print(&quot;Tesoura corta papel. Você venceu!&quot;)
+else:
+    print(&quot;O computador venceu.&quot;)</code></pre>
+        <p class="small">O programa testa os casos em ordem e executa somente o primeiro verdadeiro.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Uma rodada</p>
+        <h2>Papel contra pedra</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>1 = pedra · 2 = papel · 3 = tesoura
+Sua escolha: <span class="typed">2</span>
+Você: 2 · Computador: 1
+Papel embrulha pedra. Você venceu!</samp></pre></div>
+        <p class="small muted">A escolha do computador pode variar a cada execução.</p>
+        <p class="question">Por que um único <code>else</code> basta para as três derrotas?</p>
+        <p class="fragment answer">Quando não há empate nem uma das três vitórias, só resta a derrota.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Aventura de decisões</p>
+        <h2>Perdidos na estação espacial</h2>
+        <p>A estação Órion perdeu energia. Você faz <strong>duas escolhas</strong> seguidas, e cada caminho leva a um dos <strong>três finais</strong>: missão cumprida, resgate ou descoberta.</p>
+        <p>Em cada etapa, você digita <strong>1</strong> ou <strong>2</strong> para escolher o caminho.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Pense antes de programar</p>
+        <h2>Como a história se ramifica?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>Quantas perguntas a pessoa responde em cada partida?<p class="fragment answer">Duas.</p></li>
+          <li>A segunda pergunta é sempre a mesma?<p class="fragment answer">Não. Ela depende da resposta à primeira.</p></li>
+          <li>Quantos caminhos existem? E quantos finais?<p class="fragment answer">Quatro caminhos e três finais: dois caminhos levam ao resgate.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Conceito de condição aninhada</p>
+        <h2>Uma decisão dentro da outra</h2>
+        <p>A segunda pergunta <strong>depende da primeira resposta</strong>. Por isso, colocamos uma condição dentro do bloco de outra. Chamamos isso de <strong>condição aninhada</strong>; a indentação mostra a que bloco ela pertence.</p>
+        <div class="flow"><span>primeira resposta</span><b>→</b><span>escolhe a segunda pergunta</span><b>→</b><span>segunda resposta escolhe o final</span></div>
+        <p class="small muted">Como só comparamos as respostas com <code>"1"</code> e <code>"2"</code>, podemos manter o texto, sem converter para número.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Visualizando a aventura</p>
+        <h2>Cada resposta abre uma nova pergunta</h2>
+        <svg class="decision-diagram" viewBox="0 0 920 290" role="img" aria-labelledby="tree-title tree-desc">
+          <title id="tree-title">Caminhos da aventura na estação espacial</title>
+          <desc id="tree-desc">A primeira escolha leva à sala de comando ou ao laboratório. Na sala de comando, digitar o código leva à missão cumprida e chamar a Terra leva ao resgate. No laboratório, examinar a amostra leva à descoberta e ir à cápsula leva ao resgate.</desc>
+          <defs><marker id="tree-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#aebdd0"/></marker></defs>
+          <g fill="none" stroke="#aebdd0" stroke-width="2" marker-end="url(#tree-arrow)">
+            <path d="M460 60 V85 H200 V108"/><path d="M460 85 H720 V108"/>
+            <path d="M200 162 V190 H110 V218"/><path d="M200 190 H330 V218"/>
+            <path d="M720 162 V190 H590 V218"/><path d="M720 190 H810 V218"/>
+          </g>
+          <rect x="330" y="8" width="260" height="52" rx="10" fill="#183c43" stroke="#67e8cf"/>
+          <text x="460" y="41" text-anchor="middle" fill="#f4f7fb" font-size="21">Para onde ir?</text>
+          <rect x="20" y="110" width="360" height="52" rx="10" fill="#1b2a3f" stroke="#aebdd0"/>
+          <text x="200" y="143" text-anchor="middle" fill="#f4f7fb" font-size="20">Comando: código ou rádio?</text>
+          <rect x="540" y="110" width="360" height="52" rx="10" fill="#1b2a3f" stroke="#aebdd0"/>
+          <text x="720" y="143" text-anchor="middle" fill="#f4f7fb" font-size="20">Laboratório: amostra ou cápsula?</text>
+          <rect x="10" y="220" width="200" height="52" rx="10" fill="#1b2a3f" stroke="#67e8cf"/>
+          <text x="110" y="253" text-anchor="middle" fill="#67e8cf" font-size="20">Missão cumprida</text>
+          <rect x="230" y="220" width="200" height="52" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="330" y="253" text-anchor="middle" fill="#ffd18b" font-size="20">Resgate</text>
+          <rect x="490" y="220" width="200" height="52" rx="10" fill="#1b2a3f" stroke="#c4b5fd"/>
+          <text x="590" y="253" text-anchor="middle" fill="#c4b5fd" font-size="20">Descoberta</text>
+          <rect x="710" y="220" width="200" height="52" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="810" y="253" text-anchor="middle" fill="#ffd18b" font-size="20">Resgate</text>
+          <g fill="#aebdd0" font-size="18" text-anchor="middle">
+            <text x="335" y="78">1</text><text x="585" y="78">2</text>
+            <text x="160" y="183">1</text><text x="260" y="183">2</text>
+            <text x="650" y="183">1</text><text x="760" y="183">2</text>
+          </g>
+        </svg>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Aventura em Python</p>
+        <h2>Uma condição dentro da outra</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1-2|3-4|5-8|9-10|11-14">print(&quot;Alerta! A estação Órion perdeu energia.&quot;)
+primeira = input(&quot;1 = sala de comando, 2 = laboratório: &quot;)
+if primeira == &quot;1&quot;:
+    segunda = input(&quot;1 = digitar o código, 2 = chamar a Terra: &quot;)
+    if segunda == &quot;1&quot;:
+        print(&quot;Os motores voltam a funcionar. Missão cumprida!&quot;)
+    else:
+        print(&quot;Uma nave vem buscar você. Resgate!&quot;)
+else:
+    segunda = input(&quot;1 = examinar a amostra, 2 = ir à cápsula: &quot;)
+    if segunda == &quot;1&quot;:
+        print(&quot;A amostra brilha e gera energia. Descoberta!&quot;)
+    else:
+        print(&quot;A cápsula leva você de volta à Terra. Resgate!&quot;)</code></pre>
+        <p class="small">A primeira resposta escolhe <strong>qual</strong> segunda pergunta será feita. Só um dos dois blocos internos é executado.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Uma exploração</p>
+        <h2>Pelo laboratório até a descoberta</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Alerta! A estação Órion perdeu energia.
+1 = sala de comando, 2 = laboratório: <span class="typed">2</span>
+1 = examinar a amostra, 2 = ir à cápsula: <span class="typed">1</span>
+A amostra brilha e gera energia. Descoberta!</samp></pre></div>
+        <p>Com a resposta <code>"2"</code>, a condição externa é falsa e o programa entra no <code>else</code>. Lá dentro, a segunda resposta escolhe o final.</p>
+        <p class="question">Como você acrescentaria uma terceira escolha depois da sala de comando?</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Quiz de multiplicação</p>
+        <h2>Cinco perguntas, uma pontuação</h2>
+        <p>O programa faz <strong>cinco perguntas</strong>. Em cada uma, sorteia dois fatores de <strong>1 a 10</strong> e pede o produto.</p>
+        <ol>
+          <li>Se a resposta estiver certa, avisa e soma um ponto.</li>
+          <li>Se estiver errada, mostra a resposta correta.</li>
+          <li>No fim, apresenta a pontuação.</li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Pense antes de programar</p>
+        <h2>O que se repete e o que acontece uma vez?</h2>
+        <p class="small muted">Converse com quem está ao lado e responda em português, sem escrever código.</p>
+        <ol class="think">
+          <li>O que acontece em cada uma das cinco perguntas?<p class="fragment answer">Sortear dois fatores, perguntar o produto, conferir e avisar se está certo.</p></li>
+          <li>O que acontece uma vez só, antes e depois das perguntas?<p class="fragment answer">Antes, os pontos começam em zero. Depois, mostramos a pontuação final.</p></li>
+          <li>Como o programa lembra quantas respostas estavam certas?<p class="fragment answer">Com um contador que aumenta um ponto a cada acerto.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Conceito de contador</p>
+        <h2>Uma variável que acumula</h2>
+        <p>Um <strong>contador</strong> é uma variável que começa em zero e aumenta quando algo acontece. Ele precisa ser criado <strong>antes</strong> da repetição.</p>
+        <p>A atribuição <code>pontos = pontos + 1</code> calcula o valor atual mais um e guarda o resultado na mesma variável.</p>
+        <div class="flow"><span><code>pontos</code>: 0</span><b>→</b><span>acerto: 1</span><b>→</b><span>erro: 1</span><b>→</b><span>acerto: 2</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Quiz em Python</p>
+        <h2>Sorteio, repetição e pontuação</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1-2|3-5|6|7-9|10-11|12">import random
+pontos = 0
+for pergunta in range(1, 6):
+    fator1 = random.randint(1, 10)
+    fator2 = random.randint(1, 10)
+    resposta = int(input(f&quot;Pergunta {pergunta}: {fator1} x {fator2} = &quot;))
+    if resposta == fator1 * fator2:
+        print(&quot;Certo!&quot;)
+        pontos = pontos + 1
+    else:
+        print(f&quot;Errado. A resposta é {fator1 * fator2}.&quot;)
+print(f&quot;Pontuação final: {pontos} de 5&quot;)</code></pre>
+        <p class="small">Os fatores são sorteados <strong>dentro</strong> do <code>for</code>, então cada pergunta tem uma nova conta.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Uma partida</p>
+        <h2>Quatro acertos em cinco</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Pergunta 1: 7 x 8 = <span class="typed">56</span>
+Certo!
+Pergunta 2: 6 x 9 = <span class="typed">56</span>
+Errado. A resposta é 54.
+Pergunta 3: 3 x 4 = <span class="typed">12</span>
+Certo!
+Pergunta 4: 10 x 2 = <span class="typed">20</span>
+Certo!
+Pergunta 5: 5 x 5 = <span class="typed">25</span>
+Certo!
+Pontuação final: 4 de 5</samp></pre></div>
+        <p class="small muted">Os fatores sorteados podem variar a cada execução.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão · Explique com suas palavras</p>
+        <h2>O que cada jogo nos ensinou?</h2>
+        <ol>
+          <li>Por que o número secreto é sorteado antes do <code>for</code>?</li>
+          <li>Como <code>%</code> mostra se uma soma é par?</li>
+          <li>Quando usamos <code>elif</code> e quando usamos <code>and</code>?</li>
+          <li>Por que <code>pontos = 0</code> fica fora da repetição?</li>
+        </ol>
+        <p class="fragment answer">Os passos que se repetem ficam dentro do <code>for</code>; o que deve acontecer uma vez fica fora. <code>elif</code> cria mais caminhos, e <code>and</code> exige duas condições verdadeiras.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Prática no Jupyter Notebook</p>
+        <h2>Agora é sua vez de jogar e programar</h2>
+        <p>Abra o notebook da aula e execute as células na ordem. Use <strong>Shift + Enter</strong> para executar uma célula e avançar para a próxima.</p>
+        <ol>
+          <li>Resolva a adivinhação em etapas, testando cada parte.</li>
+          <li>Em cada jogo, leia as regras e os passos e escreva sua solução antes de abrir a resposta.</li>
+          <li>Jogue várias vezes e verifique se cada resultado possível aparece.</li>
+        </ol>
+        <p class="small muted">Digite as entradas no formato indicado em cada enunciado.</p>
+        <p class="small"><a href="aula_02_jogos_python.ipynb" download>Baixar o notebook da aula</a></p>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', progress: true, transition: 'fade', plugins: [RevealHighlight] });
+  </script>
+</body>
+</html>
