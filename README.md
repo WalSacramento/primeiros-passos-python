@@ -76,7 +76,7 @@ Experimente alterar o orçamento para **R$ 15,00** e observe a nova mensagem. Na
 
 ## Publicar no GitHub Pages
 
-1. Envie `index.html` e as pastas `assets/`, `aula_01/` e `aula_02/` para o repositório no GitHub, mantendo a estrutura abaixo.
+1. Envie `index.html` e as pastas `assets/`, `aula_01/`, `aula_02/` e `exercicios/` para o repositório no GitHub, mantendo a estrutura abaixo.
 2. Acesse **Settings → Pages**.
 3. Em **Build and deployment → Source**, selecione **Deploy from a branch**.
 4. Selecione a branch que contém os arquivos (`main` ou `master`) e a pasta **/ (root)**.
@@ -99,6 +99,9 @@ O endereço do site abre a página inicial, que leva às aulas em `aula_01/` e `
 ├── aula_02/
 │   ├── index.html                          # Apresentação da aula 2
 │   └── aula_02_jogos_python.ipynb          # Jogos guiados e atividades
+├── exercicios/
+│   ├── lista_exercicios.html               # Fonte da lista de exercícios
+│   └── lista_exercicios.pdf                # Lista para imprimir (aulas 1 e 2)
 └── README.md
 ```
 

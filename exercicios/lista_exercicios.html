@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lista de exercícios das aulas 1 e 2 de Python">
+  <title>Lista de exercícios</title>
+  <style>
+    @page { size: A4; margin: 13mm 16mm; }
+    html { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body {
+      margin: 0; color: #1f2937;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 10.5pt; line-height: 1.45;
+    }
+    h1, h2, h3 { color: #101827; font-weight: 760; letter-spacing: -.035em; }
+    h1 { margin: 0; font-size: 22pt; line-height: 1.1; }
+    h2 { margin: 1.4em 0 .2em; padding-bottom: .2em; border-bottom: 2px solid #0f766e; font-size: 15pt; }
+    h3 { margin: 0 0 .3em; font-size: 12pt; }
+    p { margin: .35em 0; }
+    strong, .accent { color: #0f766e; }
+    em { color: #b45309; font-style: normal; font-weight: 600; }
+    code { color: #b45309; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .9em; }
+    ul, ol { margin: .35em 0; padding-left: 1.4em; }
+    li { margin: .2em 0; }
+    .eyebrow { margin: 0 0 .4em; color: #0f766e; font-size: 8pt; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .muted { color: #5b6b7f; }
+    .small { font-size: .9em; }
+    .head { display: grid; grid-template-columns: 1fr auto; gap: 1em; align-items: end; padding-bottom: .6em; border-bottom: 3px solid #0f766e; }
+    .head img { width: 130px; }
+    .id { display: grid; grid-template-columns: 3fr 1.2fr 1.2fr; gap: .9em 1.2em; margin: 1em 0; }
+    .id span { padding-bottom: .2em; border-bottom: 1px solid #6b7280; color: #5b6b7f; font-size: .9em; }
+    .id .wide { grid-column: span 2; }
+    .card { margin: .7em 0; padding: .6em .8em; border: 1px solid #cbd5e1; border-radius: 6px; background: #f3f7fa; break-inside: avoid; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: .3em; margin: .6em 0; }
+    .flow span { padding: .25em .5em; border: 1px solid #b6d9d3; border-radius: 4px; background: #e8f6f3; font-size: .9em; }
+    .flow b { color: #0f766e; }
+    .ex { margin: 1em 0 0; padding-top: .8em; border-top: 1px dashed #cbd5e1; }
+    .ex h3, .ex .eyebrow { break-after: avoid; }
+    pre, .terminal, .question li, table, .resp + .lines { break-inside: avoid; }
+    .resp { break-after: avoid; }
+    .ex h3 .n { display: inline-block; min-width: 1.9em; margin-right: .35em; padding: .05em .3em; border-radius: 4px; background: #0f766e; color: #fff; text-align: center; }
+    .question { margin: .55em 0; padding: .45em .65em; border-left: 4px solid #d97706; background: #fdf6ea; }
+    .question ol { margin: .2em 0 0; }
+    .lines { height: calc(var(--n, 2) * 1.9em); margin: .2em 0 .5em; background: repeating-linear-gradient(transparent 0 calc(1.9em - 1px), #9ca3af calc(1.9em - 1px) 1.9em); }
+    .resp { margin: .5em 0 0; color: #5b6b7f; font-size: .85em; font-weight: 650; }
+    .terminal { margin: .5em 0; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #f8fafc; }
+    .terminal-label { padding: .2em .8em; background: #e2e8f0; color: #475569; font-size: 7.5pt; font-weight: 650; letter-spacing: .04em; }
+    .terminal pre, pre.code { margin: 0; padding: .5em .8em; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9pt; line-height: 1.35; white-space: pre-wrap; }
+    .terminal .typed { color: #b45309; font-weight: 700; }
+    pre.code { margin: .5em 0; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; color: #1f2937; }
+    pre.code .k { color: #a626a4; } pre.code .s { color: #50a14f; } pre.code .f { color: #4078f2; } pre.code .m { color: #986801; }
+    table { width: 100%; margin: .5em 0; border-collapse: collapse; font-size: .92em; }
+    th, td { padding: .35em .45em; border: 1px solid #cbd5e1; text-align: left; }
+    th { background: #e8f6f3; color: #0f766e; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="head">
+      <div>
+        <p class="eyebrow">Introdução à programação · Atividade</p>
+        <h1>Lista de exercícios: <span class="accent">primeiros passos em Python</span></h1>
+        <p class="muted small">Aulas 1 e 2</p>
+      </div>
+      <img src="../assets/python-logo.svg" alt="Logotipo do Python">
+    </div>
+    <div class="id"><span>Nome:</span><span>Turma:</span><span>Data:</span></div>
+  </header>
+
+  <div class="card">
+    <h3>Instruções</h3>
+    <p>Os exercícios retomam as duas aulas: a <strong>aula 1</strong> (consumo de energia) e a <strong>aula 2</strong> (jogos). Resolva cada um em uma célula de um notebook Jupyter e execute o código para conferir o resultado.</p>
+    <p>Siga o mesmo método das aulas. Quando houver perguntas de <em>Pense antes de programar</em>, responda em português, sem código, e só depois escreva o programa.</p>
+    <div class="flow"><span>entender o problema</span><b>→</b><span>pensar na solução</span><b>→</b><span>traduzir para Python</span><b>→</b><span>testar</span></div>
+    <p class="small muted">Nos exemplos de terminal, o texto em <em>laranja</em> é o que a pessoa digita. Use ponto decimal nas entradas, como <code>0.80</code>. Responda às perguntas escritas nas linhas desta folha e entregue também o notebook com os programas.</p>
+  </div>
+
+  <h2>Parte 1 · Aula 1</h2>
+  <p class="muted">Saída, variáveis, tipos, operações, f-strings, entrada e decisões.</p>
+
+  <section class="ex">
+    <p class="eyebrow">Saída com print()</p>
+    <h3><span class="n">01</span>Apresentando o programa</h3>
+    <p>Escreva um programa que mostre três linhas: seu nome, o nome do curso e a frase <code>Estou aprendendo Python!</code>. Use um <code>print()</code> para cada linha.</p>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Variáveis e tipos</p>
+    <h3><span class="n">02</span>Que espécie de informação é essa?</h3>
+    <p>Sem executar o código, indique o tipo (<code>int</code>, <code>float</code>, <code>str</code> ou <code>bool</code>) de cada valor. Depois, confira com <code>type()</code>.</p>
+    <table>
+      <thead><tr><th>Valor</th><th>Tipo</th><th>Valor</th><th>Tipo</th></tr></thead>
+      <tbody>
+        <tr><td><code>220</code></td><td></td><td><code>"127"</code></td><td></td></tr>
+        <tr><td><code>0.80</code></td><td></td><td><code>True</code></td><td></td></tr>
+        <tr><td><code>"geladeira"</code></td><td></td><td><code>5 &gt; 3</code></td><td></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Atribuição</p>
+    <h3><span class="n">03</span>Qual será a saída?</h3>
+    <p>Leia o código linha a linha e escreva o que será mostrado. Explique por que o valor final de <code>horas</code> não é 4.</p>
+<pre class="code">horas = <span class="m">4</span>
+horas = horas + <span class="m">2</span>
+horas = horas * <span class="m">3</span>
+<span class="f">print</span>(<span class="s">f"Uso diário: {horas} h"</span>)</pre>
+    <p class="resp">Resposta:</p><div class="lines" style="--n:3"></div>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Operadores e f-strings</p>
+    <h3><span class="n">04</span>Calculando a potência</h3>
+    <p>Um aparelho funciona em <strong>127 V</strong> e consome <strong>8,5 A</strong>. Guarde a tensão e a corrente em variáveis, calcule a potência (<code>potência = tensão × corrente</code>) e mostre o resultado com <strong>uma casa decimal</strong>.</p>
+    <div class="terminal"><div class="terminal-label">Terminal · saída esperada</div><pre><samp>Potência: 1079.5 W</samp></pre></div>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Entrada e conversão</p>
+    <h3><span class="n">05</span>Algarismos em um texto ainda são texto</h3>
+    <p>Execute o código abaixo, digitando <code>127</code> e <code>2</code>. Explique por que o resultado é <code>1272</code> e corrija o programa para que ele mostre <code>254</code>.</p>
+<pre class="code">tensao = <span class="f">input</span>(<span class="s">"Tensão (V): "</span>)
+corrente = <span class="f">input</span>(<span class="s">"Corrente (A): "</span>)
+<span class="f">print</span>(tensao * <span class="m">1</span> + corrente)</pre>
+    <p class="resp">Por que o resultado é 1272?:</p><div class="lines" style="--n:3"></div>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Projeto · Consumo e custo</p>
+    <h3><span class="n">06</span>Quanto custa o banho?</h3>
+    <p>Um chuveiro de <strong>5500 W</strong> é usado <strong>15 minutos por dia</strong>, durante <strong>30 dias</strong>, com tarifa de <strong>R$ 0,80/kWh</strong>. Peça esses quatro valores com <code>input()</code> e mostre o consumo do mês em kWh e o custo em reais, com <strong>duas casas decimais</strong>.</p>
+    <div class="question">Pense antes de programar
+      <ol>
+        <li>Em que unidade a fórmula de energia espera o tempo de uso? Como converter minutos para essa unidade?<div class="lines" style="--n:2"></div></li>
+        <li>Como passar de Wh para kWh?<div class="lines" style="--n:2"></div></li>
+      </ol>
+    </div>
+    <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em laranja</div><pre><samp>Potência (W): <span class="typed">5500</span>
+Minutos por dia: <span class="typed">15</span>
+Dias: <span class="typed">30</span>
+Tarifa (R$/kWh): <span class="typed">0.80</span>
+Consumo: 41.25 kWh
+Custo: R$ 33.00</samp></pre></div>
+  </section>
+
+  <section class="ex">
+    <p class="eyebrow">Comparação e decisão</p>
+    <h3><span class="n">07</span>O consumo está alto?</h3>
+    <p>Complete o exercício anterior: se o consumo do mês for <strong>maior que 30 kWh</strong>, mostre <code>Consumo alto: tente reduzir o tempo de banho.</code>; caso contrário, mostre <code>Consumo dentro do esperado.</code></p>
+    <p>Teste com 15 e com 10 minutos por dia. Que mensagem aparece em cada caso?</p>
+    <p class="resp">Resposta:</p><div class="lines" style="--n:2"></div>
+  </section>
+
+  <section>
+    <h2>Parte 2 · Aula 2</h2>
+    <p class="muted">Sorteios, repetição com <code>for</code> e <code>range</code>, <code>break</code>, <code>elif</code>, resto da divisão e <code>and</code>.</p>
+
+    <section class="ex">
+      <p class="eyebrow">Repetição</p>
+      <h3><span class="n">08</span>Quantas voltas o laço dá?</h3>
+      <p>Sem executar, escreva a saída de cada trecho. Depois, confira no notebook.</p>
+<pre class="code"><span class="k">for</span> i <span class="k">in</span> <span class="f">range</span>(<span class="m">1</span>, <span class="m">6</span>):
+    <span class="f">print</span>(i * i)
+
+<span class="k">for</span> n <span class="k">in</span> <span class="f">range</span>(<span class="m">3</span>, <span class="m">8</span>):
+    <span class="k">if</span> n == <span class="m">6</span>:
+        <span class="k">break</span>
+    <span class="f">print</span>(n)</pre>
+      <p class="resp">Saída prevista:</p><div class="lines" style="--n:4"></div>
+    </section>
+
+    <section class="ex">
+      <p class="eyebrow">Entrada e repetição</p>
+      <h3><span class="n">09</span>Tabuada</h3>
+      <p>Peça um número inteiro e mostre a tabuada dele, de 1 a 10, no formato abaixo.</p>
+      <div class="terminal"><div class="terminal-label">Terminal · início da saída</div><pre><samp>Número: <span class="typed">7</span>
+7 x 1 = 7
+7 x 2 = 14
+...
+7 x 10 = 70</samp></pre></div>
+    </section>
+
+    <section class="ex">
+      <p class="eyebrow">Resto da divisão</p>
+      <h3><span class="n">10</span>Par, ímpar e múltiplo de 3</h3>
+      <p>Peça um número inteiro e informe se ele é <em>par</em> ou <em>ímpar</em>. Em seguida, informe também se ele é múltiplo de 3.</p>
+      <p class="small muted">Dica: um número é múltiplo de 3 quando o resto da divisão por 3 é zero.</p>
+    </section>
+
+    <section class="ex">
+      <p class="eyebrow">Vários caminhos com elif e and</p>
+      <h3><span class="n">11</span>Situação do aluno</h3>
+      <p>Peça uma nota e mostre a situação de acordo com a tabela. Notas abaixo de 0 ou acima de 10 devem gerar a mensagem <code>Nota inválida</code>.</p>
+      <table>
+        <thead><tr><th>Nota</th><th>Situação</th></tr></thead>
+        <tbody>
+          <tr><td>de 7 a 10</td><td>Aprovado</td></tr>
+          <tr><td>de 4 até menos de 7</td><td>Recuperação</td></tr>
+          <tr><td>de 0 até menos de 4</td><td>Reprovado</td></tr>
+        </tbody>
+      </table>
+      <div class="question">Pense antes de programar
+        <ol>
+          <li>Em que ordem as condições devem ser testadas para que cada nota caia em um só caminho?<div class="lines" style="--n:2"></div></li>
+          <li>Como escrever “a nota está entre 0 e 10” combinando duas comparações com <code>and</code>?<div class="lines" style="--n:2"></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="ex">
+      <p class="eyebrow">Sorteio e contador</p>
+      <h3><span class="n">12</span>Quantos seis saíram?</h3>
+      <p>Lance um dado de seis faces <strong>20 vezes</strong> com <code>random.randint(1, 6)</code>. Mostre cada resultado e, no final, quantas vezes saiu o número 6.</p>
+      <div class="question">Pense antes de programar
+        <ol>
+          <li>O que acontece uma vez só? E o que se repete?<div class="lines" style="--n:2"></div></li>
+          <li>Que valor o contador deve ter antes do laço? Quando ele aumenta?<div class="lines" style="--n:2"></div></li>
+        </ol>
+      </div>
+    </section>
+  </section>
+</body>
+</html>

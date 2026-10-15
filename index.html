@@ -16,7 +16,7 @@
     }
     .reveal .slides section { text-align: left; }
     .reveal h1, .reveal h2, .reveal h3 { color: #fff; font-family: inherit; font-weight: 760; letter-spacing: -.035em; text-transform: none; }
-    .reveal h1 { font-size: 2.3em; line-height: 1.04; }
+    .reveal h1 { font-size: 1.9em; line-height: 1.04; }
     .reveal h2 { font-size: 1.55em; line-height: 1.12; margin-bottom: .65em; }
     .reveal h3 { font-size: .95em; margin: 0 0 .35em; }
     .reveal p { line-height: 1.35; }
@@ -31,13 +31,20 @@
     .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55em; margin-top: .7em; }
     .card { padding: .6em .7em; border: 1px solid #40526a; border-radius: .42em; background: #1b2a3f; }
     .card p { font-size: .82em; }
-    .divider { width: 4.3em; height: .15em; margin: .6em 0 .85em; background: #67e8cf; }
+    .divider { width: 4.3em; height: .15em; margin: .45em 0 .6em; background: #67e8cf; }
     .reveal .slide-background { background: radial-gradient(circle at 88% 14%, #1c394a 0, #101827 43%); }
     @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
     a.card { display: block; color: inherit; text-decoration: none; transition: border-color .2s, background .2s; }
     a.card:hover, a.card:focus-visible { border-color: #67e8cf; background: #1f3550; outline: none; }
     a.card .eyebrow { margin-bottom: .35em !important; font-size: .53em; }
-    a.card .go { margin-top: .5em; color: #67e8cf; font-size: .7em; font-weight: 700; }
+    .activity { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .4em 1em; margin-top: .55em; }
+    .activity { padding: .45em .7em; font-size: .85em; }
+    .activity .eyebrow { margin-bottom: .2em !important; font-size: .45em; }
+    .activity h3 { margin: 0; }
+    .activity .links { display: flex; gap: .5em; margin: 0; font-size: .7em; font-weight: 700; }
+    .activity .links a { padding: .35em .7em; border: 1px solid #67e8cf; border-radius: .3em; text-decoration: none; }
+    .activity .links a:hover, .activity .links a:focus-visible { background: #1f3550; outline: none; }
+    a.card .go {margin-top: .5em; color: #67e8cf; font-size: .7em; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -61,6 +68,13 @@
             <p>Sorteios, repetição com <code>for</code>, <code>elif</code>, resto da divisão e condições aninhadas.</p>
             <p class="go">Abrir a aula 2 →</p>
           </a>
+        </div>
+        <div class="card activity">
+          <div>
+            <p class="eyebrow">Atividade · Aulas 1 e 2</p>
+            <h3>Lista de exercícios</h3>
+          </div>
+          <p class="links"><a href="exercicios/lista_exercicios.pdf" target="_blank" rel="noopener">Visualizar →</a><a href="exercicios/lista_exercicios.pdf" download>Baixar PDF ↓</a></p>
         </div>
         <p class="small muted" style="margin-top: 1em">Waldsson Sacramento dos Santos</p>
       </section>
