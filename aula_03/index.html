@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução comentada da lista de exercícios das aulas 1 e 2 de Python">
+  <title>Resolução da lista de exercícios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight/monokai.css">
+  <style>
+    :root { color-scheme: dark; }
+    body { background: #101827; }
+    .reveal {
+      color: #f4f7fb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 31px;
+    }
+    .reveal .slides section { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 { color: #fff; font-family: inherit; font-weight: 760; letter-spacing: -.035em; text-transform: none; }
+    .reveal h1 { font-size: 2.3em; line-height: 1.04; }
+    .reveal h2 { font-size: 1.55em; line-height: 1.12; margin-bottom: .65em; }
+    .reveal h3 { font-size: .95em; margin: 0 0 .35em; }
+    .reveal p, .reveal li { line-height: 1.35; }
+    .reveal p { margin: .35em 0; }
+    .reveal strong, .accent { color: #67e8cf; }
+    .reveal a { color: #67e8cf; }
+    .reveal em { color: #ffd18b; font-style: normal; }
+    .reveal code:not(pre code) { color: #ffd18b; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+    .reveal code, .terminal samp { font-variant-ligatures: none; }
+    .reveal pre { width: 100%; margin: .4em 0; box-shadow: none; font-size: .76em; }
+    .reveal pre table { font-size: inherit; margin: 0; }
+    .reveal pre.long { font-size: .6em; }
+    .reveal .think li { margin: .5em 0; }
+    .reveal .think .answer { margin-top: .15em !important; font-size: .85em; }
+    .reveal pre.code-wrapper { position: relative; }
+    .reveal pre code { max-height: none; padding: .8em 1em; border: 1px solid #42516a; border-radius: .35em; line-height: 1.35; }
+    .reveal .controls { color: #67e8cf; }
+    .reveal .progress { color: #67e8cf; height: 4px; }
+    .reveal .slide-number { left: 18px; right: auto; color: #cbd5e1; background: transparent; font-size: 17px; }
+    .eyebrow { margin-bottom: .65em !important; color: #67e8cf; font-size: .53em; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .muted { color: #aebdd0; }
+    .small { font-size: .68em; }
+    .question { margin-top: .75em !important; padding: .48em .65em; border-left: 5px solid #ffd18b; background: #1b2a3f; color: #fff; }
+    .answer { margin-top: .55em !important; color: #67e8cf; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: .28em; margin: .9em 0; }
+    .flow span { padding: .42em .55em; border-radius: .3em; background: #1c3047; color: #e9f2fb; }
+    .flow b { color: #67e8cf; }
+    .formula { margin: .65em 0 !important; padding: .45em .65em; border-radius: .3em; background: #183c43; color: #f4fffc; font-size: 1.12em; }
+    .divider { width: 4.3em; height: .15em; margin: .6em 0 .85em; background: #67e8cf; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: .35em 0; }
+    .reveal table { width: 100%; margin: .5em 0; font-size: .75em; border-collapse: collapse; }
+    .reveal th, .reveal td { padding: .3em .45em; border-bottom: 1px solid #4a5b71; }
+    .reveal th { color: #67e8cf; }
+    .reveal .hljs { background: #172033; }
+    .reveal .hljs-ln-code { padding-left: .5em; }
+    .reveal .hljs-ln-numbers { color: #9bb0c5; }
+    .reveal .slide-background { background: radial-gradient(circle at 88% 14%, #1c394a 0, #101827 43%); }
+    .terminal { margin: .5em 0; border: 1px solid #4b6670; border-radius: 8px; overflow: hidden; background: #0b131d; }
+    .terminal-label { padding: .35em .8em; background: #22313c; color: #c9d8e2; font-size: .5em; font-weight: 650; letter-spacing: .04em; }
+    .reveal .terminal pre { margin: 0; padding: .55em .8em; box-sizing: border-box; color: #c1f4da; font-size: .7em; line-height: 1.3; white-space: pre-wrap; }
+    .terminal samp { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .terminal .typed { color: #ffd18b; }
+    .decision-diagram { display: block; width: 100%; height: 300px; margin: .55em 0; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <p class="eyebrow">Resolução da lista de exercícios</p>
+        <h1>Resolvendo juntos<br><span class="accent">os 12 exercícios</span></h1>
+        <div class="divider"></div>
+        <p class="small muted">Waldsson Sacramento dos Santos</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Nossa aula</p>
+        <h2>Doze exercícios, um raciocínio por vez</h2>
+        <table>
+          <thead><tr><th>Tempo</th><th>Exercícios</th><th>Aprendizado principal</th></tr></thead>
+          <tbody><tr><td>5 min</td><td>Método</td><td>Como conferir a própria solução</td></tr>
+          <tr><td>10 min</td><td>01 a 03</td><td><code>print()</code>, tipos e atribuição</td></tr>
+          <tr><td>10 min</td><td>04 e 05</td><td>F-strings, <code>input()</code> e conversão</td></tr>
+          <tr><td>15 min</td><td>06 e 07</td><td>Unidades, fórmula e decisão</td></tr>
+          <tr><td>10 min</td><td>08 e 09</td><td><code>for</code>, <code>range</code> e <code>break</code></td></tr>
+          <tr><td>5 min</td><td>10</td><td>Resto da divisão com <code>%</code></td></tr>
+          <tr><td>15 min</td><td>11</td><td><code>elif</code>, <code>and</code> e valores de fronteira</td></tr>
+          <tr><td>15 min</td><td>12</td><td>Sorteio e contador</td></tr>
+          <tr><td>5 min</td><td>Revisão</td><td>Explicar com as próprias palavras</td></tr></tbody>
+        </table>
+      </section>
+
+      <section>
+        <p class="eyebrow">Nosso método</p>
+        <h2>Primeiro a solução, depois o código</h2>
+        <p>Vamos usar o mesmo método das aulas. Antes de cada resolução, compare o que você fez com o <strong>raciocínio</strong>, não apenas com o código.</p>
+        <p>Sua solução pode ser diferente da apresentada e estar correta. O que decide é o <strong>teste</strong>: o programa mostra a saída esperada?</p>
+        <div class="flow"><span>entender o problema</span><b>→</b><span>pensar na solução</span><b>→</b><span>traduzir para Python</span><b>→</b><span>testar</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Parte 1 · Aula 1</p>
+        <h2>Exercícios de 01 a 07</h2>
+        <p>Saída, variáveis, tipos, operações, f-strings, entrada e decisões.</p>
+        <div class="flow"><span><code>print()</code></span><b>→</b><span>variáveis e tipos</span><b>→</b><span>contas</span><b>→</b><span><code>input()</code></span><b>→</b><span><code>if</code> e <code>else</code></span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Enunciado</p>
+        <h2>Apresentando o programa</h2>
+        <p>Escreva um programa que mostre três linhas: seu nome, o nome do curso e a frase <code>Estou aprendendo Python!</code>. Use um <code>print()</code> para cada linha.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Solução</p>
+        <h2>Um <code>print()</code> para cada linha</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">print(&quot;Seu nome&quot;)
+print(&quot;Nome do curso&quot;)
+print(&quot;Estou aprendendo Python!&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Seu nome
+Nome do curso
+Estou aprendendo Python!</samp></pre></div>
+        <p class="small muted">Troque os dois primeiros textos pelos seus dados.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">01 · Por que esta é a resposta?</p>
+        <h2>Três comandos, três linhas</h2>
+        <ul>
+          <li><strong>Três linhas:</strong> ao terminar, cada <code>print()</code> passa para a linha seguinte. Por isso, três comandos produzem três linhas.</li>
+          <li><strong>Aspas:</strong> elas indicam que o conteúdo é texto. Sem aspas, Python tentaria interpretar as palavras como código e mostraria um erro.</li>
+          <li><strong>Ordem:</strong> Python executa de cima para baixo, então a ordem do código é a ordem da saída.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Enunciado</p>
+        <h2>Que espécie de informação é essa?</h2>
+        <p>Sem executar o código, indique o tipo (<code>int</code>, <code>float</code>, <code>str</code> ou <code>bool</code>) de cada valor. Depois, confira com <code>type()</code>.</p>
+        <div class="flow"><span><code>220</code></span><span><code>0.80</code></span><span><code>&quot;geladeira&quot;</code></span><span><code>&quot;127&quot;</code></span><span><code>True</code></span><span><code>5 &gt; 3</code></span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Solução</p>
+        <h2>O tipo de cada valor</h2>
+        <table>
+          <thead><tr><th>Valor</th><th>Tipo</th><th>Como reconhecer</th></tr></thead>
+          <tbody><tr><td><code>220</code></td><td class="fragment" data-fragment-index="0"><strong>int</strong></td><td class="fragment" data-fragment-index="0">Número sem casa decimal</td></tr>
+          <tr><td><code>0.80</code></td><td class="fragment" data-fragment-index="1"><strong>float</strong></td><td class="fragment" data-fragment-index="1">Número com ponto decimal</td></tr>
+          <tr><td><code>&quot;geladeira&quot;</code></td><td class="fragment" data-fragment-index="2"><strong>str</strong></td><td class="fragment" data-fragment-index="2">Texto entre aspas</td></tr>
+          <tr><td><code>&quot;127&quot;</code></td><td class="fragment" data-fragment-index="3"><strong>str</strong></td><td class="fragment" data-fragment-index="3">Tem algarismos, mas está entre aspas</td></tr>
+          <tr><td><code>True</code></td><td class="fragment" data-fragment-index="4"><strong>bool</strong></td><td class="fragment" data-fragment-index="4">Verdadeiro ou falso</td></tr>
+          <tr><td><code>5 &gt; 3</code></td><td class="fragment" data-fragment-index="5"><strong>bool</strong></td><td class="fragment" data-fragment-index="5">Comparação produz <code>True</code> ou <code>False</code></td></tr></tbody>
+        </table>
+        <p class="question">Em quais dois valores é mais fácil errar? Por quê?</p>
+        <p class="fragment answer"><code>&quot;127&quot;</code> parece número, e <code>5 &gt; 3</code> parece conta. O tipo depende do que o valor é, não da aparência.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Conferindo com type()</p>
+        <h2>Python confirma as respostas</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-3|4-6">print(type(220))
+print(type(0.80))
+print(type(&quot;geladeira&quot;))
+print(type(&quot;127&quot;))
+print(type(True))
+print(type(5 &gt; 3))</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;
+&lt;class 'bool'&gt;
+&lt;class 'bool'&gt;</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">02 · Por que esta é a resposta?</p>
+        <h2>O tipo vem da forma como o valor é escrito</h2>
+        <ul>
+          <li><code>220</code> não tem ponto decimal, então é <code>int</code>. <code>0.80</code> tem ponto decimal, então é <code>float</code>.</li>
+          <li><code>&quot;127&quot;</code> é <code>str</code> porque as aspas fazem dele um texto. Por isso, <code>&quot;127&quot; + 1</code> gera um erro.</li>
+          <li><code>True</code> é um dos dois valores de <code>bool</code>. A inicial maiúscula é obrigatória: <code>true</code> gera um erro.</li>
+          <li><code>5 &gt; 3</code> é <code>bool</code> porque Python faz a comparação e guarda o <strong>resultado</strong>, que é <code>True</code>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Enunciado</p>
+        <h2>Qual será a saída?</h2>
+        <p>Leia o código linha a linha e escreva o que será mostrado. Explique por que o valor final de <code>horas</code> não é 4.</p>
+        <pre><code class="language-python" data-trim>horas = 4
+horas = horas + 2
+horas = horas * 3
+print(f&quot;Uso diário: {horas} h&quot;)</code></pre>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Solução</p>
+        <h2>Seguindo o valor de <code>horas</code></h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3|4">horas = 4
+horas = horas + 2
+horas = horas * 3
+print(f&quot;Uso diário: {horas} h&quot;)</code></pre>
+        <div class="flow fragment"><span><code>horas</code>: 4</span><b>→</b><span>4 + 2 = 6</span><b>→</b><span>6 × 3 = 18</span></div>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Uso diário: 18 h</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">03 · Por que esta é a resposta?</p>
+        <h2>Cada atribuição substitui o valor anterior</h2>
+        <table>
+          <thead><tr><th>Linha</th><th>O que Python calcula</th><th><code>horas</code> passa a valer</th></tr></thead>
+          <tbody><tr><td><code>horas = 4</code></td><td>Nada: só guarda o valor</td><td>4</td></tr>
+          <tr><td><code>horas = horas + 2</code></td><td>4 + 2</td><td>6</td></tr>
+          <tr><td><code>horas = horas * 3</code></td><td>6 × 3</td><td>18</td></tr></tbody>
+        </table>
+        <p>O sinal <code>=</code> não indica igualdade. Python calcula primeiro o lado direito, com o valor atual, e depois <strong>substitui</strong> o que estava guardado.</p>
+        <p>O valor final não é 4 porque o 4 só existiu até a segunda linha. O <code>print()</code> mostra o valor de <code>horas</code> no momento em que é executado: 18.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Enunciado</p>
+        <h2>Calculando a potência</h2>
+        <p>Um aparelho funciona em <strong>127 V</strong> e consome <strong>8,5 A</strong>. Guarde a tensão e a corrente em variáveis, calcule a potência (<code>potência = tensão × corrente</code>) e mostre o resultado com <strong>uma casa decimal</strong>.</p>
+        <div class="terminal"><div class="terminal-label">Terminal · saída esperada</div><pre><samp>Potência: 1079.5 W</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Solução</p>
+        <h2>Variáveis, conta e saída formatada</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3|4">tensao = 127
+corrente = 8.5
+potencia = tensao * corrente
+print(f&quot;Potência: {potencia:.1f} W&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>Potência: 1079.5 W</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">04 · Por que esta é a resposta?</p>
+        <h2>Da fórmula à saída</h2>
+        <ul>
+          <li><strong>Conta:</strong> a fórmula dá 127 × 8,5 = 1079,5. Como <code>potencia</code> usa as variáveis, basta mudar os dados para calcular outro aparelho.</li>
+          <li><strong>Ponto decimal:</strong> no código, escrevemos <code>8.5</code>. A vírgula separa valores: <code>8,5</code> seriam dois valores, 8 e 5.</li>
+          <li><strong>Uma casa decimal:</strong> <code>:.1f</code> arredonda o valor <strong>mostrado</strong> para uma casa. O valor guardado na variável não muda.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Enunciado</p>
+        <h2>Algarismos em um texto ainda são texto</h2>
+        <p>Execute o código abaixo, digitando <code>127</code> e <code>2</code>. Explique por que o resultado é <code>1272</code> e corrija o programa para que ele mostre <code>254</code>.</p>
+        <pre><code class="language-python" data-trim>tensao = input(&quot;Tensão (V): &quot;)
+corrente = input(&quot;Corrente (A): &quot;)
+print(tensao * 1 + corrente)</code></pre>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Solução · O diagnóstico</p>
+        <h2>Por que o resultado é 1272?</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3">tensao = input(&quot;Tensão (V): &quot;)
+corrente = input(&quot;Corrente (A): &quot;)
+print(tensao * 1 + corrente)</code></pre>
+        <p><code>input()</code> sempre devolve <strong>texto</strong>. Com texto, os operadores têm outro significado:</p>
+        <div class="flow fragment"><span><code>&quot;127&quot; * 1</code> repete uma vez</span><b>→</b><span><code>&quot;127&quot; + &quot;2&quot;</code> cola</span><b>→</b><span><code>&quot;1272&quot;</code></span></div>
+        <p class="question">Basta converter as entradas com <code>int()</code>?</p>
+        <p class="fragment answer">Não. A conta <code>tensao * 1 + corrente</code> daria 127 + 2 = 129.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Solução · A correção</p>
+        <h2>Duas correções, não uma</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1-2|3">tensao = int(input(&quot;Tensão (V): &quot;))
+corrente = int(input(&quot;Corrente (A): &quot;))
+print(tensao * corrente)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Tensão (V): <span class="typed">127</span>
+Corrente (A): <span class="typed">2</span>
+254</samp></pre></div>
+        <ol class="small">
+          <li><code>int()</code> transforma o texto digitado em número.</li>
+          <li>A expressão passa a calcular a potência: tensão <strong>vezes</strong> corrente.</li>
+        </ol>
+        <p class="small muted">Conferir o resultado revelou o segundo erro: o programa rodava, mas a conta estava errada.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">05 · Por que esta é a resposta?</p>
+        <h2>Só uma versão mostra 254</h2>
+        <table>
+          <thead><tr><th>Versão do programa</th><th>O que acontece</th><th>Saída</th></tr></thead>
+          <tbody><tr><td>Original</td><td>Repete e cola textos</td><td>1272</td></tr>
+          <tr><td><code>int()</code> e <code>tensao * 1 + corrente</code></td><td>127 × 1 + 2</td><td>129</td></tr>
+          <tr><td><code>float()</code> e <code>tensao * corrente</code></td><td>Conta certa, com decimal</td><td>254.0</td></tr>
+          <tr><td><strong><code>int()</code> e <code>tensao * corrente</code></strong></td><td>127 × 2</td><td><strong>254</strong></td></tr></tbody>
+        </table>
+        <p>O mesmo operador muda de significado conforme o tipo: entre textos, <code>+</code> cola; entre números, soma. A correção precisa trocar o <strong>tipo</strong> e a <strong>conta</strong>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Enunciado</p>
+        <h2>Quanto custa o banho?</h2>
+        <p>Um chuveiro de <strong>5500 W</strong> é usado <strong>15 minutos por dia</strong>, durante <strong>30 dias</strong>, com tarifa de <strong>R$ 0,80/kWh</strong>. Peça esses quatro valores com <code>input()</code> e mostre o consumo do mês em kWh e o custo em reais, com <strong>duas casas decimais</strong>.</p>
+        <div class="flow"><span>4 entradas</span><b>→</b><span>converter unidades</span><b>→</b><span>consumo</span><b>→</b><span>custo</span><b>→</b><span>2 saídas</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Pense antes de programar</p>
+        <h2>Em que unidade cada valor está?</h2>
+        <p class="small muted">Compare com as respostas que você escreveu na folha.</p>
+        <ol class="think">
+          <li>Em que unidade a fórmula de energia espera o tempo de uso? Como converter minutos para essa unidade?<p class="fragment answer">Em horas. Basta dividir os minutos por 60: 15 min são 0,25 h.</p></li>
+          <li>Como passar de Wh para kWh?<p class="fragment answer">Dividindo por 1000, porque 1 kWh são 1000 Wh.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Do enunciado à fórmula</p>
+        <h2>Fazendo a conta à mão primeiro</h2>
+        <p class="formula">energia (kWh) = potência (W) ÷ 1000 × horas por dia × dias</p>
+        <div class="flow"><span>15 min ÷ 60</span><b>→</b><span>0,25 h</span></div>
+        <div class="flow fragment"><span>5500 ÷ 1000 × 0,25 × 30</span><b>→</b><span>41,25 kWh</span></div>
+        <div class="flow fragment"><span>41,25 kWh × R$ 0,80</span><b>→</b><span>R$ 33,00</span></div>
+        <p class="fragment small">Com o resultado calculado à mão, já sabemos o que esperar do programa.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Solução</p>
+        <h2>Entrada, cálculos e saída</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1-4|6|7-8|10-11">potencia_w = float(input(&quot;Potência (W): &quot;))
+minutos_dia = float(input(&quot;Minutos por dia: &quot;))
+dias = int(input(&quot;Dias: &quot;))
+tarifa = float(input(&quot;Tarifa (R$/kWh): &quot;))
+
+horas_dia = minutos_dia / 60
+energia_kwh = potencia_w / 1000 * horas_dia * dias
+custo = energia_kwh * tarifa
+
+print(f&quot;Consumo: {energia_kwh:.2f} kWh&quot;)
+print(f&quot;Custo: R$ {custo:.2f}&quot;)</code></pre>
+        <p class="small">Usamos <code>float()</code> nos valores que podem ter decimais e <code>int()</code> no número de dias.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Uma execução</p>
+        <h2>O programa confirma a conta à mão</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Potência (W): <span class="typed">5500</span>
+Minutos por dia: <span class="typed">15</span>
+Dias: <span class="typed">30</span>
+Tarifa (R$/kWh): <span class="typed">0.80</span>
+Consumo: 41.25 kWh
+Custo: R$ 33.00</samp></pre></div>
+        <p class="question">O que aconteceria se usássemos os 15 minutos diretamente na fórmula, sem dividir por 60?</p>
+        <p class="fragment answer">O consumo daria 2475 kWh, 60 vezes mais do que o correto. O programa rodaria normalmente, mas o resultado estaria errado.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">06 · Por que esta é a resposta?</p>
+        <h2>As unidades conduzem a conta</h2>
+        <ul>
+          <li><strong>Horas:</strong> energia é potência × tempo. Para obter Wh, o tempo precisa estar em horas: 5500 W × 0,25 h = 1375 Wh por dia.</li>
+          <li><strong>kWh:</strong> em 30 dias, são 41 250 Wh. Dividindo por 1000, chegamos a 41,25 kWh.</li>
+          <li><strong>Custo:</strong> a tarifa é em R$ por kWh, então a energia precisa estar em kWh: 41,25 × 0,80 = R$ 33,00.</li>
+          <li><strong>Ordem:</strong> o custo depende da energia, e a energia depende das horas. Por isso, calculamos nessa sequência.</li>
+          <li><strong>Conversão:</strong> <code>input()</code> devolve texto, e precisamos de números para fazer as contas.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">07 · Enunciado</p>
+        <h2>O consumo está alto?</h2>
+        <p>Complete o exercício anterior: se o consumo do mês for <strong>maior que 30 kWh</strong>, mostre <code>Consumo alto: tente reduzir o tempo de banho.</code>; caso contrário, mostre <code>Consumo dentro do esperado.</code></p>
+        <p>Teste com 15 e com 10 minutos por dia. Que mensagem aparece em cada caso?</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">07 · Solução</p>
+        <h2>Uma decisão depois do cálculo</h2>
+        <p>Acrescentamos ao programa do exercício 06, depois do cálculo, uma decisão:</p>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3-4">if energia_kwh &gt; 30:
+    print(&quot;Consumo alto: tente reduzir o tempo de banho.&quot;)
+else:
+    print(&quot;Consumo dentro do esperado.&quot;)</code></pre>
+        <table class="fragment">
+          <thead><tr><th>Minutos por dia</th><th>Consumo</th><th>Mensagem</th></tr></thead>
+          <tbody><tr><td>15</td><td>41,25 kWh</td><td>Consumo alto: tente reduzir o tempo de banho.</td></tr>
+          <tr><td>10</td><td>27,50 kWh</td><td>Consumo dentro do esperado.</td></tr></tbody>
+        </table>
+      </section>
+
+      <section>
+        <p class="eyebrow">07 · Por que esta é a resposta?</p>
+        <h2>A comparação escolhe um dos dois caminhos</h2>
+        <ul>
+          <li><strong>15 minutos:</strong> o consumo é 41,25 kWh. Como 41,25 &gt; 30 é verdadeiro, o bloco do <code>if</code> é executado.</li>
+          <li><strong>10 minutos:</strong> são 5,5 kW × (10 ÷ 60) h × 30 dias = 27,5 kWh. Como 27,5 &gt; 30 é falso, o bloco do <code>else</code> é executado.</li>
+          <li><strong>Operador:</strong> o enunciado diz “maior que”, por isso usamos <code>&gt;</code>. Com exatamente 30 kWh, a mensagem é a do <code>else</code>.</li>
+          <li><strong>Posição:</strong> o <code>if</code> vem depois do cálculo porque usa <code>energia_kwh</code>, que precisa já existir.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">Parte 2 · Aula 2</p>
+        <h2>Exercícios de 08 a 12</h2>
+        <p>Sorteios, repetição com <code>for</code> e <code>range</code>, <code>break</code>, <code>elif</code>, resto da divisão e <code>and</code>.</p>
+        <div class="flow"><span><code>for</code> e <code>range</code></span><b>→</b><span><code>%</code></span><b>→</b><span><code>elif</code> e <code>and</code></span><b>→</b><span>sorteio e contador</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">08 · Enunciado</p>
+        <h2>Quantas voltas o laço dá?</h2>
+        <p>Sem executar, escreva a saída de cada trecho. Depois, confira no notebook.</p>
+        <pre class="long"><code class="language-python" data-trim>for i in range(1, 6):
+    print(i * i)
+
+for n in range(3, 8):
+    if n == 6:
+        break
+    print(n)</code></pre>
+      </section>
+
+      <section>
+        <p class="eyebrow">08 · Solução · Primeiro trecho</p>
+        <h2>Primeiro trecho: cinco voltas</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2">for i in range(1, 6):
+    print(i * i)</code></pre>
+        <p><code>range(1, 6)</code> produz 1, 2, 3, 4 e 5. O <strong>início entra e o fim não entra</strong>.</p>
+        <table class="fragment">
+          <thead><tr><th>Volta</th><th>1ª</th><th>2ª</th><th>3ª</th><th>4ª</th><th>5ª</th></tr></thead>
+          <tbody><tr><td><code>i</code></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+          <tr><td><code>i * i</code></td><td>1</td><td>4</td><td>9</td><td>16</td><td>25</td></tr></tbody>
+        </table>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>1
+4
+9
+16
+25</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">08 · Solução · Segundo trecho</p>
+        <h2>Segundo trecho: o <code>break</code> vem antes do <code>print</code></h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2-3|4">for n in range(3, 8):
+    if n == 6:
+        break
+    print(n)</code></pre>
+        <p class="fragment"><code>range(3, 8)</code> iria até 7, mas quando <code>n</code> vale 6, <code>break</code> encerra o laço <strong>antes</strong> de chegar ao <code>print</code>. Por isso, o 6 não aparece.</p>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · saída</div><pre><samp>3
+4
+5</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">08 · Por que esta é a resposta?</p>
+        <h2>O fim do <code>range</code> e a posição do <code>break</code></h2>
+        <ul>
+          <li><strong>Primeiro trecho:</strong> o fim do <code>range</code> não entra, então <code>i</code> vai de 1 a 5, e não até 6. São cinco voltas, e cada uma mostra o quadrado de <code>i</code>.</li>
+          <li><strong>Segundo trecho:</strong> com <code>n</code> valendo 3, 4 e 5, a condição é falsa e o <code>print</code> é executado.</li>
+          <li><strong>Por que o 6 não aparece:</strong> o teste vem antes do <code>print</code>. Se o <code>print</code> viesse antes do <code>if</code>, o 6 apareceria.</li>
+          <li><strong>Por que o 7 não aparece:</strong> <code>break</code> encerra todo o laço, e não apenas aquela volta.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">09 · Enunciado</p>
+        <h2>Tabuada</h2>
+        <p>Peça um número inteiro e mostre a tabuada dele, de 1 a 10, no formato abaixo.</p>
+        <div class="terminal"><div class="terminal-label">Terminal · início da saída</div><pre><samp>Número: <span class="typed">7</span>
+7 x 1 = 7
+7 x 2 = 14
+...
+7 x 10 = 70</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">09 · Solução</p>
+        <h2>Uma leitura e dez linhas</h2>
+        <p>O número é lido <strong>uma vez</strong>; só a linha da tabuada se repete, com o multiplicador indo de 1 a 10.</p>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3">numero = int(input(&quot;Número: &quot;))
+for multiplicador in range(1, 11):
+    print(f&quot;{numero} x {multiplicador} = {numero * multiplicador}&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Número: <span class="typed">7</span>
+7 x 1 = 7
+7 x 2 = 14
+...
+7 x 10 = 70</samp></pre></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">09 · Por que esta é a resposta?</p>
+        <h2>O que fica fora e o que fica dentro do <code>for</code></h2>
+        <ul>
+          <li><strong><code>input()</code> fora do laço:</strong> o número é pedido uma vez. Dentro do <code>for</code>, o programa perguntaria dez vezes.</li>
+          <li><strong><code>int()</code>:</strong> sem a conversão, <code>&quot;7&quot; * 2</code> repetiria o texto e mostraria <code>77</code>, em vez de 14.</li>
+          <li><strong><code>range(1, 11)</code>:</strong> o início entra e o fim não entra. Para chegar a 10, escrevemos 11.</li>
+          <li><strong>F-string:</strong> a cada volta, Python substitui as chaves pelos valores atuais e faz a conta <code>numero * multiplicador</code>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">10 · Enunciado</p>
+        <h2>Par, ímpar e múltiplo de 3</h2>
+        <p>Peça um número inteiro e informe se ele é <em>par</em> ou <em>ímpar</em>. Em seguida, informe também se ele é múltiplo de 3.</p>
+        <p class="small muted">Dica: um número é múltiplo de 3 quando o resto da divisão por 3 é zero.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">10 · Solução</p>
+        <h2>Duas perguntas independentes</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1|3-6|8-11">numero = int(input(&quot;Número: &quot;))
+
+if numero % 2 == 0:
+    print(&quot;É par.&quot;)
+else:
+    print(&quot;É ímpar.&quot;)
+
+if numero % 3 == 0:
+    print(&quot;É múltiplo de 3.&quot;)
+else:
+    print(&quot;Não é múltiplo de 3.&quot;)</code></pre>
+        <p class="small">Um número é múltiplo de 3 quando <code>numero % 3</code> vale zero.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">10 · Testando</p>
+        <h2>Um número, duas respostas</h2>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Número: <span class="typed">6</span>
+É par.
+É múltiplo de 3.</samp></pre></div>
+        <div class="terminal"><div class="terminal-label">Terminal · entrada digitada em amarelo</div><pre><samp>Número: <span class="typed">7</span>
+É ímpar.
+Não é múltiplo de 3.</samp></pre></div>
+        <p class="question">Por que dois <code>if</code> separados, e não um <code>elif</code>?</p>
+        <p class="fragment answer">Porque as duas respostas valem ao mesmo tempo. Com <code>elif</code>, o 6 pararia em “par”.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">10 · Por que esta é a resposta?</p>
+        <h2>O resto da divisão responde às duas perguntas</h2>
+        <table>
+          <thead><tr><th>Número</th><th><code>numero % 2</code></th><th>Paridade</th><th><code>numero % 3</code></th><th>Múltiplo de 3?</th></tr></thead>
+          <tbody><tr><td>6</td><td>0</td><td>Par</td><td>0</td><td>Sim</td></tr>
+          <tr><td>7</td><td>1</td><td>Ímpar</td><td>1</td><td>Não</td></tr>
+          <tr><td>9</td><td>1</td><td>Ímpar</td><td>0</td><td>Sim</td></tr></tbody>
+        </table>
+        <p>Um número é par quando a divisão por 2 não deixa resto, e é múltiplo de 3 quando a divisão por 3 não deixa resto. Por isso, comparamos o resto com zero.</p>
+        <p>Paridade e múltiplo de 3 não dependem um do outro: o 6 é par e múltiplo, e o 9 é ímpar e múltiplo. Cada pergunta precisa do seu próprio <code>if</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Enunciado</p>
+        <h2>Situação do aluno</h2>
+        <p>Peça uma nota e mostre a situação de acordo com a tabela. Notas abaixo de 0 ou acima de 10 devem gerar a mensagem <code>Nota inválida</code>.</p>
+        <table>
+          <thead><tr><th>Nota</th><th>Situação</th></tr></thead>
+          <tbody><tr><td>de 7 a 10</td><td>Aprovado</td></tr>
+          <tr><td>de 4 até menos de 7</td><td>Recuperação</td></tr>
+          <tr><td>de 0 até menos de 4</td><td>Reprovado</td></tr></tbody>
+        </table>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Pense antes de programar</p>
+        <h2>Em que ordem testar?</h2>
+        <p class="small muted">Compare com as respostas que você escreveu na folha.</p>
+        <ol class="think">
+          <li>Em que ordem as condições devem ser testadas para que cada nota caia em um só caminho?<p class="fragment answer">Primeiro, se a nota é válida. Depois, da maior faixa para a menor: 7, 4 e o que sobrar. Se testássemos <code>nota &gt;= 4</code> primeiro, o 8 cairia em recuperação.</p></li>
+          <li>Como escrever “a nota está entre 0 e 10” combinando duas comparações com <code>and</code>?<p class="fragment answer"><code>nota &gt;= 0 and nota &lt;= 10</code>: as duas comparações precisam ser verdadeiras.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Visualizando a decisão</p>
+        <h2>O caminho de uma nota</h2>
+        <svg class="decision-diagram" viewBox="0 0 920 300" role="img" aria-labelledby="nota-title nota-desc">
+          <title id="nota-title">Fluxo da decisão da situação do aluno</title>
+          <desc id="nota-desc">O programa verifica se a nota está entre 0 e 10. Se não estiver, mostra nota inválida. Se estiver, verifica se é maior ou igual a 7, o que resulta em aprovado. Se não for, verifica se é maior ou igual a 4, o que resulta em recuperação. Caso contrário, resulta em reprovado.</desc>
+          <defs><marker id="nota-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#aebdd0"/></marker></defs>
+          <g fill="none" stroke="#aebdd0" stroke-width="2" marker-end="url(#nota-arrow)">
+            <path d="M260 90 H338"/><path d="M560 90 H638"/>
+            <path d="M135 150 V218"/><path d="M450 150 V218"/>
+            <path d="M655 98 V218"/><path d="M805 120 V218"/>
+          </g>
+          <path d="M 135 30 L 260 90 L 135 150 L 10 90 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="135" y="85" text-anchor="middle" fill="#f4f7fb" font-size="20">Nota entre</text>
+          <text x="135" y="110" text-anchor="middle" fill="#f4f7fb" font-size="20">0 e 10?</text>
+          <path d="M 450 30 L 560 90 L 450 150 L 340 90 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="450" y="97" text-anchor="middle" fill="#f4f7fb" font-size="20">nota ≥ 7?</text>
+          <path d="M 750 30 L 860 90 L 750 150 L 640 90 Z" fill="#183c43" stroke="#67e8cf" stroke-width="2"/>
+          <text x="750" y="97" text-anchor="middle" fill="#f4f7fb" font-size="20">nota ≥ 4?</text>
+          <rect x="35" y="220" width="200" height="60" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="135" y="257" text-anchor="middle" fill="#ffd18b" font-size="20">Nota inválida</text>
+          <rect x="350" y="220" width="200" height="60" rx="10" fill="#1b2a3f" stroke="#67e8cf"/>
+          <text x="450" y="257" text-anchor="middle" fill="#67e8cf" font-size="20">Aprovado</text>
+          <rect x="590" y="220" width="130" height="60" rx="10" fill="#1b2a3f" stroke="#ffd18b"/>
+          <text x="655" y="257" text-anchor="middle" fill="#ffd18b" font-size="18">Recuperação</text>
+          <rect x="740" y="220" width="130" height="60" rx="10" fill="#1b2a3f" stroke="#c4b5fd"/>
+          <text x="805" y="257" text-anchor="middle" fill="#c4b5fd" font-size="18">Reprovado</text>
+          <g font-size="18" text-anchor="middle">
+            <text x="298" y="78" fill="#67e8cf">Sim</text><text x="598" y="78" fill="#ffd18b">Não</text>
+            <text x="165" y="188" fill="#ffd18b">Não</text><text x="478" y="188" fill="#67e8cf">Sim</text>
+            <text x="630" y="188" fill="#67e8cf">Sim</text><text x="832" y="188" fill="#ffd18b">Não</text>
+          </g>
+        </svg>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Solução</p>
+        <h2>Primeiro validar, depois classificar</h2>
+        <pre><code class="language-python" data-trim data-line-numbers="1|2|3-4|5-6|7-8|9-10">nota = float(input(&quot;Nota: &quot;))
+if nota &gt;= 0 and nota &lt;= 10:
+    if nota &gt;= 7:
+        print(&quot;Aprovado&quot;)
+    elif nota &gt;= 4:
+        print(&quot;Recuperação&quot;)
+    else:
+        print(&quot;Reprovado&quot;)
+else:
+    print(&quot;Nota inválida&quot;)</code></pre>
+        <p class="small">Em <code>elif nota &gt;= 4</code>, não precisamos escrever <code>nota &lt; 7</code>: só chegamos ali se o teste anterior foi falso. Usamos <code>float()</code> porque uma nota pode ser 6.5.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Testando</p>
+        <h2>Os erros moram nas fronteiras</h2>
+        <p>Além de valores comuns, testamos os <strong>limites</strong> de cada faixa, onde um <code>&gt;</code> no lugar de <code>&gt;=</code> mudaria o resultado.</p>
+        <table>
+          <thead><tr><th>Nota</th><th>-1</th><th>0</th><th>3.9</th><th>4</th><th>6.9</th><th>7</th><th>10</th><th>10.5</th></tr></thead>
+          <tbody><tr><td>Situação</td><td>Inválida</td><td>Reprov.</td><td>Reprov.</td><td>Recup.</td><td>Recup.</td><td>Aprov.</td><td>Aprov.</td><td>Inválida</td></tr></tbody>
+        </table>
+        <p class="question">Qual destes testes falharia se trocássemos <code>nota &gt;= 7</code> por <code>nota &gt; 7</code>?</p>
+        <p class="fragment answer">O teste com 7: a nota cairia em recuperação.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">11 · Por que esta é a resposta?</p>
+        <h2>Acompanhando quatro notas</h2>
+        <table>
+          <thead><tr><th>Nota</th><th>Entre 0 e 10?</th><th><code>&gt;= 7</code>?</th><th><code>&gt;= 4</code>?</th><th>Situação</th></tr></thead>
+          <tbody><tr><td>8</td><td>Sim</td><td>Sim</td><td>Não testa</td><td>Aprovado</td></tr>
+          <tr><td>5</td><td>Sim</td><td>Não</td><td>Sim</td><td>Recuperação</td></tr>
+          <tr><td>3.9</td><td>Sim</td><td>Não</td><td>Não</td><td>Reprovado</td></tr>
+          <tr><td>10.5</td><td>Não</td><td>Não testa</td><td>Não testa</td><td>Nota inválida</td></tr></tbody>
+        </table>
+        <ul class="small">
+          <li><strong>Validar primeiro:</strong> sem isso, 10.5 passaria em <code>nota &gt;= 7</code> e seria “Aprovado”.</li>
+          <li><strong>Da maior faixa para a menor:</strong> cada teste só acontece se os anteriores foram falsos, então cada nota segue um único caminho.</li>
+          <li><strong><code>and</code>:</strong> a nota precisa ser, ao mesmo tempo, maior ou igual a 0 e menor ou igual a 10.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">12 · Enunciado</p>
+        <h2>Quantos seis saíram?</h2>
+        <p>Lance um dado de seis faces <strong>20 vezes</strong> com <code>random.randint(1, 6)</code>. Mostre cada resultado e, no final, quantas vezes saiu o número 6.</p>
+        <div class="flow"><span><code>seis</code>: 0</span><b>→</b><span>sortear</span><b>→</b><span>mostrar</span><b>→</b><span>é 6? soma 1</span><b>↺</b><span>20 vezes</span></div>
+      </section>
+
+      <section>
+        <p class="eyebrow">12 · Pense antes de programar</p>
+        <h2>O que se repete e o que acontece uma vez?</h2>
+        <p class="small muted">Compare com as respostas que você escreveu na folha.</p>
+        <ol class="think">
+          <li>O que acontece uma vez só? E o que se repete?<p class="fragment answer">Uma vez: criar o contador, antes, e mostrar o total, depois. Repete: sortear, mostrar e conferir se saiu 6.</p></li>
+          <li>Que valor o contador deve ter antes do laço? Quando ele aumenta?<p class="fragment answer">Começa em zero e aumenta um ponto somente quando o dado dá 6.</p></li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="eyebrow">12 · Solução</p>
+        <h2>Sorteio, repetição e contador</h2>
+        <pre class="long"><code class="language-python" data-trim data-line-numbers="1|3|4-6|7-8|10">import random
+
+seis = 0
+for lancamento in range(1, 21):
+    dado = random.randint(1, 6)
+    print(f&quot;Lançamento {lancamento}: {dado}&quot;)
+    if dado == 6:
+        seis = seis + 1
+
+print(f&quot;Total de seis: {seis}&quot;)</code></pre>
+        <div class="terminal fragment"><div class="terminal-label">Terminal · início e fim da saída</div><pre><samp>Lançamento 1: 3
+Lançamento 2: 6
+...
+Lançamento 20: 1
+Total de seis: 4</samp></pre></div>
+        <p class="small muted">Os valores sorteados podem variar a cada execução.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">12 · Por que esta é a resposta?</p>
+        <h2>Cada linha está no lugar certo</h2>
+        <ul>
+          <li><strong><code>seis = 0</code> antes do laço:</strong> dentro dele, o contador voltaria a zero a cada volta, e o total final só poderia ser 0 ou 1.</li>
+          <li><strong><code>randint</code> dentro do laço:</strong> cada lançamento precisa de um novo sorteio. Fora dele, o mesmo valor apareceria 20 vezes.</li>
+          <li><strong><code>range(1, 21)</code>:</strong> produz de 1 a 20, ou seja, 20 lançamentos.</li>
+          <li><strong><code>if dado == 6</code>:</strong> o contador só aumenta quando sai 6, e não a cada volta.</li>
+          <li><strong>Último <code>print()</code> sem indentação:</strong> ele fica fora do <code>for</code>, por isso o total aparece uma vez, no final.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="eyebrow">Revisão · Explique com suas palavras</p>
+        <h2>O que os exercícios nos ensinaram?</h2>
+        <ol>
+          <li>Por que <code>&quot;127&quot;</code> e <code>127</code> se comportam de formas diferentes?</li>
+          <li>Por que converter minutos em horas antes de usar a fórmula?</li>
+          <li>Quando usar dois <code>if</code> separados e quando usar <code>elif</code>?</li>
+          <li>Por que <code>seis = 0</code> fica fora da repetição?</li>
+        </ol>
+        <p class="fragment answer">O tipo define o que cada operação faz, e a unidade define se a fórmula vale. Perguntas independentes pedem dois <code>if</code>; caminhos exclusivos pedem <code>elif</code>. O que acontece uma vez fica fora do <code>for</code>.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Prática no Jupyter Notebook</p>
+        <h2>Agora é sua vez de conferir</h2>
+        <p>Abra o notebook da aula e execute as células na ordem. Use <strong>Shift + Enter</strong> para executar uma célula e avançar para a próxima.</p>
+        <ol>
+          <li>Refaça cada exercício na célula indicada, antes de abrir a solução.</li>
+          <li>Teste com os valores do enunciado e confira a saída esperada.</li>
+          <li>Se a sua solução for diferente e passar nos testes, ela também está certa.</li>
+        </ol>
+        <p class="small"><a href="aula_03_resolucao_exercicios.ipynb" download>Baixar o notebook da aula</a> · <a href="../exercicios/lista_exercicios.pdf" target="_blank" rel="noopener">Abrir a lista de exercícios</a></p>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/plugin/highlight.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', progress: true, transition: 'fade', plugins: [RevealHighlight] });
+  </script>
+</body>
+</html>

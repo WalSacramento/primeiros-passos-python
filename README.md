@@ -1,6 +1,6 @@
 # Primeiros passos em Python
 
-Material introdutório de Python com slides em Reveal.js e notebooks Jupyter. A primeira aula aplica os fundamentos ao cálculo de consumo e custo de energia; a segunda pratica sorteios, repetição e decisões com jogos.
+Material introdutório de Python com slides em Reveal.js e notebooks Jupyter. A primeira aula aplica os fundamentos ao cálculo de consumo e custo de energia; a segunda pratica sorteios, repetição e decisões com jogos; a terceira resolve a lista de exercícios.
 
 **Autor:** Waldsson Sacramento dos Santos.
 
@@ -37,6 +37,20 @@ A aula prioriza o raciocínio antes do código. Em cada jogo, depois das regras,
 
 No notebook, a adivinhação é resolvida em etapas. Cada jogo traz regras, um exemplo de partida, as mesmas perguntas para pensar e uma célula para a solução. As respostas, os passos para programar e a solução ficam em blocos expansíveis.
 
+## Aula 3 — Resolução da lista de exercícios
+
+Aula de **uma hora e meia** que resolve os 12 exercícios da lista das aulas 1 e 2, usando somente o que já foi apresentado.
+
+- Exercícios 01 a 03: `print()`, tipos e atribuição.
+- Exercícios 04 e 05: f-strings, `input()` e conversão. O exercício 05 mostra por que converter as entradas não basta.
+- Exercícios 06 e 07: conversão de unidades, consumo, custo e decisão.
+- Exercícios 08 e 09: `for`, `range` e `break`.
+- Exercício 10: resto da divisão e dois `if` independentes.
+- Exercício 11: `elif`, `and` e testes com valores de fronteira.
+- Exercício 12: sorteio e contador.
+
+Nos slides, cada exercício segue a mesma sequência: enunciado, solução e **por que esta é a resposta**. Quando a lista traz **Pense antes de programar**, as respostas aparecem antes da implementação. No notebook, cada exercício traz o enunciado e uma célula para a solução; as respostas, a solução e a explicação ficam em blocos expansíveis.
+
 ## Abrir a apresentação
 
 Com Python 3 instalado, execute na pasta do repositório:
@@ -45,7 +59,7 @@ Com Python 3 instalado, execute na pasta do repositório:
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Abra [http://localhost:8000](http://localhost:8000) no navegador. A página inicial direciona para a [aula 1](http://localhost:8000/aula_01/) e para a [aula 2](http://localhost:8000/aula_02/). Use as setas para navegar; nos exemplos de código, cada avanço destaca o próximo trecho ou revela a saída. Para encerrar o servidor, pressione **Ctrl+C** no terminal.
+Abra [http://localhost:8000](http://localhost:8000) no navegador. A página inicial direciona para a [aula 1](http://localhost:8000/aula_01/), a [aula 2](http://localhost:8000/aula_02/) e a [aula 3](http://localhost:8000/aula_03/). Use as setas para navegar; nos exemplos de código, cada avanço destaca o próximo trecho ou revela a saída. Para encerrar o servidor, pressione **Ctrl+C** no terminal.
 
 Os slides carregam o Reveal.js e seu plugin de destaque de código pela CDN, portanto precisam de conexão com a internet. A página é estática e não exige uma etapa de build.
 
@@ -58,11 +72,12 @@ Na pasta do repositório, execute:
 ```bash
 jupyter notebook aula_01/aula_01_energia_python.ipynb
 jupyter notebook aula_02/aula_02_jogos_python.ipynb
+jupyter notebook aula_03/aula_03_resolucao_exercicios.ipynb
 ```
 
-Use o primeiro comando para a aula 1 e o segundo para a aula 2.
+Use o primeiro comando para a aula 1, o segundo para a aula 2 e o terceiro para a aula 3.
 
-No navegador, execute as células de cima para baixo com **Shift + Enter**. As variáveis ficam disponíveis durante a sessão, por isso a ordem de execução importa. Os exemplos usam recursos básicos de Python, sem bibliotecas adicionais. Na aula 2, os jogos usam sorteios, então os resultados mudam a cada execução.
+No navegador, execute as células de cima para baixo com **Shift + Enter**. As variáveis ficam disponíveis durante a sessão, por isso a ordem de execução importa. Os exemplos usam recursos básicos de Python, sem bibliotecas adicionais. Na aula 2 e no exercício 12 da aula 3, os programas usam sorteios, então os resultados mudam a cada execução.
 
 ### Exemplo do projeto
 
@@ -76,7 +91,7 @@ Experimente alterar o orçamento para **R$ 15,00** e observe a nova mensagem. Na
 
 ## Publicar no GitHub Pages
 
-1. Envie `index.html` e as pastas `assets/`, `aula_01/`, `aula_02/` e `exercicios/` para o repositório no GitHub, mantendo a estrutura abaixo.
+1. Envie `index.html` e as pastas `assets/`, `aula_01/`, `aula_02/`, `aula_03/` e `exercicios/` para o repositório no GitHub, mantendo a estrutura abaixo.
 2. Acesse **Settings → Pages**.
 3. Em **Build and deployment → Source**, selecione **Deploy from a branch**.
 4. Selecione a branch que contém os arquivos (`main` ou `master`) e a pasta **/ (root)**.
@@ -84,7 +99,7 @@ Experimente alterar o orçamento para **R$ 15,00** e observe a nova mensagem. Na
 
 No GitHub Free, use um repositório público. Novos commits na branch selecionada atualizam o site. Veja a [documentação do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-O endereço do site abre a página inicial, que leva às aulas em `aula_01/` e `aula_02/`. Cada apresentação oferece seu notebook para download no último slide. A execução do notebook acontece em um ambiente Jupyter.
+O endereço do site abre a página inicial, que leva às aulas em `aula_01/`, `aula_02/` e `aula_03/`. Cada apresentação oferece seu notebook para download no último slide. A execução do notebook acontece em um ambiente Jupyter.
 
 ## Arquivos
 
@@ -99,6 +114,9 @@ O endereço do site abre a página inicial, que leva às aulas em `aula_01/` e `
 ├── aula_02/
 │   ├── index.html                          # Apresentação da aula 2
 │   └── aula_02_jogos_python.ipynb          # Jogos guiados e atividades
+├── aula_03/
+│   ├── index.html                          # Apresentação da aula 3
+│   └── aula_03_resolucao_exercicios.ipynb  # Resolução comentada da lista
 ├── exercicios/
 │   ├── lista_exercicios.html               # Fonte da lista de exercícios
 │   └── lista_exercicios.pdf                # Lista para imprimir (aulas 1 e 2)
